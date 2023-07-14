@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Buttons
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Backdrop
+    uniqueID: 2249480321
+    locked: 0
+  - name: Background
+    uniqueID: 1761488481
+    locked: 0
+  - name: Elder
+    uniqueID: 108102543
+    locked: 0
+  - name: Objects
+    uniqueID: 2728737507
+    locked: 0
+  - name: Atmospheric Overlay
+    uniqueID: 3741582981
+    locked: 0
+  - name: UI
+    uniqueID: 2983951299
+    locked: 0
+  - name: Button
+    uniqueID: 319661289
+    locked: 0
+  - name: Pointer
+    uniqueID: 647673305
+    locked: 0
