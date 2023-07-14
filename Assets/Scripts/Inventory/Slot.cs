@@ -7,10 +7,10 @@ public class Slot : MonoBehaviour
 {
 
     public Sprite taken;
-    Pointer p;
-    Pointer pointer;
+    pVisible p;
+    pVisible pointer;
     Sprite sprite;
-    createCombo combo;
+    placeItem combo;
     actionText hoverText;
     Character whirl;
     Controls controls;
@@ -21,7 +21,7 @@ public class Slot : MonoBehaviour
 
     private void Start()
     {
-        combo = FindObjectOfType<createCombo>();
+        combo = FindObjectOfType<placeItem>();
         hoverText = FindObjectOfType<actionText>();
         whirl = FindObjectOfType<Character>();
         controls = FindObjectOfType<Controls>();
@@ -60,28 +60,14 @@ public class Slot : MonoBehaviour
 
     public void OnMouseDown()
     {
-        p = FindObjectOfType<Pointer>();
-        pointer = p.GetComponent<Pointer>();
         sprite = GetComponent<SpriteRenderer>().sprite;
 
-
-        if (GetComponent<SpriteRenderer>().sprite != null)
+        if (GetComponent<SpriteRenderer>().sprite != null) //if slot has an item in
         {
-
-            pointer.holding = sprite;   //addtopointer
-
-            taken = sprite;
             GetComponent<SpriteRenderer>().sprite = null;    //empty slot
+            taken = sprite; //leave which item taken marker
 
-
-            if (combo.stageCounter == 0)
-            {
-                FindObjectOfType<placeItem>().instantPlace();
-            }
-            else
-            {
-                FindObjectOfType<createCombo>().instantCombine();
-            }
+            combo.CombineItem(sprite.name);  //combine items
 
         }
 
@@ -91,11 +77,9 @@ public class Slot : MonoBehaviour
     {
         hover = true;
 
-        p = FindObjectOfType<Pointer>();
-
         sprite = GetComponent<SpriteRenderer>().sprite;
 
-        if (p.holdingItem == false && taken==null && sprite!=null)
+        if (taken==null && sprite!=null)
         {
 
             if (controls.GetComponent<Controls>().controller == false)  //NEW CODE
@@ -118,7 +102,6 @@ public class Slot : MonoBehaviour
                         }
                     }
 
-                    p.holding = p.hand;
                 }
                 
             }
@@ -132,12 +115,9 @@ public class Slot : MonoBehaviour
     {
         hover = false;
 
-        p = FindObjectOfType<Pointer>();
 
-        if (p.holdingItem == false && !whirl.cSpoken)
+        if (!whirl.cSpoken)
         {
-
-            p.holding = p.empty;
 
                 if (controls.GetComponent<Controls>().controller == false)  //NEW CODE
                 {

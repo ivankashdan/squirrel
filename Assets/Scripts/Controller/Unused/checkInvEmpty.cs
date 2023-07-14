@@ -16,7 +16,7 @@ public class checkInvEmpty : MonoBehaviour
     void Start()
     {
         inv = FindObjectOfType<Inventory>().gameObject;
-        combo = FindObjectOfType<createCombo>().gameObject;
+        combo = FindObjectOfType<placeItem>().gameObject;
         a = FindObjectOfType<followSelect>().gameObject;
         whirl = FindObjectOfType<Character>().gameObject;
 

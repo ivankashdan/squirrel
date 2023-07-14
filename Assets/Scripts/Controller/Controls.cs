@@ -19,7 +19,7 @@ public class Controls : MonoBehaviour
     private GameObject inv;
 
     actionText text;
-    Pointer p;
+    pVisible p;
 
     float stickTimer = 0;
     bool stickSwitch = true;
@@ -29,11 +29,11 @@ public class Controls : MonoBehaviour
 
     private void Start()
     {
-        combo = FindObjectOfType<createCombo>().gameObject;
+        combo = FindObjectOfType<placeItem>().gameObject;
         whirl = FindObjectOfType<Character>().gameObject;
         inv = FindObjectOfType<Inventory>().gameObject;
         text = FindObjectOfType<actionText>();
-        p = FindObjectOfType<Pointer>();
+        p = FindObjectOfType<pVisible>();
 
         slotNumber = 0;
        
@@ -254,7 +254,7 @@ public class Controls : MonoBehaviour
     {
 
         combo.GetComponent<comboCheck>().timer = 0;
-        combo.GetComponent<createCombo>().stageCounter = 0;
+        combo.GetComponent<placeItem>().stageCounter = 0;
         combo.GetComponent<SpriteRenderer>().sprite = null;
         Destroy(combo.GetComponent<PolygonCollider2D>());
 

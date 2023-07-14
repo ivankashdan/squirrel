@@ -4,38 +4,24 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 
 
-public class Pointer : MonoBehaviour
+public class pVisible : MonoBehaviour
 {
-
-
 
     [SerializeField] private Camera mainCamera;
 
 
     public Sprite holding;
     public Sprite empty;
-    public Sprite hand;
-    public Sprite talk;
-    public Sprite compass;
-    public Sprite magnify;
+
     public static bool isHolding;
     public bool holdingItem;
 
-    public Sprite savedBlock;
     public bool isBlocking;
     public bool toSavedPos;
     public Vector3 savedPos;
     public Vector3 mouseWorldPosition;
 
-
-    public float minX;
-    public float maxX;
-    public float minY;
-    public float maxY;
-
     Character whirl;
-
-
 
     void Start()
     {
@@ -44,20 +30,11 @@ public class Pointer : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = empty;
 
     }
-
-
-    private void FixedUpdate()
-    {
-        if (!whirl.cSpoken && !isBlocking)
-        {
-            GetComponent<SpriteRenderer>().sprite = empty;
-        }
-    }
-
+ 
 
     void Update()
     {
-        Cursor.visible = false;
+        Cursor.visible = false; //hardware cursor invisible
 
         if (isBlocking)
         {
@@ -73,7 +50,8 @@ public class Pointer : MonoBehaviour
 
                 toSavedPos = false;
             }
-            else {
+            else
+            {
 
                 mouseWorldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 mouseWorldPosition.z = 0f;
@@ -87,6 +65,13 @@ public class Pointer : MonoBehaviour
 
     }
 
+    private void FixedUpdate()
+    {
+        if (!whirl.cSpoken && !isBlocking)
+        {
+            GetComponent<SpriteRenderer>().sprite = empty;
+        }
+    }
 
 
     public void toggleCursor()
@@ -94,14 +79,12 @@ public class Pointer : MonoBehaviour
 
         if (isBlocking)   //if currently blocking
         {
-           
+
 
             holding = empty;
 
             toSavedPos = true;
             isBlocking = false;
-
-
 
 
         }
@@ -119,21 +102,6 @@ public class Pointer : MonoBehaviour
 
     }
 
-    public void cursorOn()
-    {
-        savedPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-
-        GetComponent<SpriteRenderer>().sprite = null;
-
-        isBlocking = true;
-    }
-
-    public void cursorOff() 
-    {
-        holding = empty;
-        toSavedPos = true;
-        isBlocking = false;
-    }
 
 
 }

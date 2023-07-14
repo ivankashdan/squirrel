@@ -9,18 +9,18 @@ public class clickCombo : MonoBehaviour
     public bool hover = false;
 
     Controls controls;
-    Pointer p;
+    pVisible p;
     actionText txt;
     Character whirl;
-    createCombo combo;
+    placeItem combo;
 
     void Start()
     {
         controls = FindObjectOfType<Controls>();
-        p = FindObjectOfType<Pointer>();
+        p = FindObjectOfType<pVisible>();
         txt = FindObjectOfType<actionText>();
         whirl = FindObjectOfType<Character>();
-        combo = FindObjectOfType<createCombo>();
+        combo = FindObjectOfType<placeItem>();
     }
 
 
@@ -35,7 +35,6 @@ public class clickCombo : MonoBehaviour
         // Debug.Log("entered");
 
         hover = true;
-        p.holding = p.hand;
     }
 
 
@@ -43,7 +42,6 @@ public class clickCombo : MonoBehaviour
     {
         //Debug.Log("exited");
         hover = false;
-        p.holding = p.empty;
 
         if (!whirl.cSpoken)
         {

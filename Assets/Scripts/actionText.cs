@@ -19,7 +19,7 @@ public class actionText : MonoBehaviour
     GameObject inv;
     //GameObject voice;
 
-    Pointer p;
+    pVisible p;
 
     int timer;
     int delay = 10;
@@ -33,12 +33,12 @@ public class actionText : MonoBehaviour
 
         select = FindObjectOfType<selector>().gameObject;
         whirl = FindObjectOfType<Character>().gameObject;
-        combo = FindObjectOfType<createCombo>().gameObject;
+        combo = FindObjectOfType<placeItem>().gameObject;
         control = FindObjectOfType<Controls>().gameObject;
         inv = FindObjectOfType<Inventory>().gameObject;
         //voice = FindObjectOfType<colourRoom>().gameObject;
 
-        p = FindObjectOfType<Pointer>();
+        p = FindObjectOfType<pVisible>();
 
     }
 

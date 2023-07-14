@@ -1,25 +1,20 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mouse : MonoBehaviour
+public class pClick : MonoBehaviour
 {
 
-    Controls controls;
-    Pointer p;
-    Character whirl;
-    createCombo combo;
+	Character whirl;
+	placeItem combo;
 
-    void Start()
+    private void Start()
     {
-        controls = FindObjectOfType<Controls>();
-        p = FindObjectOfType<Pointer>();
-        whirl = FindObjectOfType<Character>();
-        combo = FindObjectOfType<createCombo>();
-    }
+		whirl = FindObjectOfType<Character>();
+		combo = FindObjectOfType<placeItem>();
+	}
 
-
-    private void OnMouseUp()
+    private void OnMouseUp()  //skip timers on mouse click
     {
         if (whirl.GetComponent<Character>().cSpoken)
         {

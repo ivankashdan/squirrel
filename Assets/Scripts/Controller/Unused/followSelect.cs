@@ -16,7 +16,7 @@ public class followSelect : MonoBehaviour
     {
         select = FindObjectOfType<selector>().gameObject;
         txt = FindObjectOfType<actionText>().gameObject;
-        combo = FindObjectOfType<createCombo>().gameObject;
+        combo = FindObjectOfType<placeItem>().gameObject;
         y = FindObjectOfType<checkInvEmpty>().gameObject;
         whirl = FindObjectOfType<Character>().gameObject;
     }

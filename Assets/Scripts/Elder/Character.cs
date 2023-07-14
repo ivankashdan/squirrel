@@ -32,7 +32,7 @@ public class Character : MonoBehaviour
     //dialogue list
     ArrayList toDo = new ArrayList();
 
-    Pointer p;
+    pVisible p;
     actionText actText;
     Controls control;
 
@@ -54,7 +54,7 @@ public class Character : MonoBehaviour
     {
         voice.GetComponent<TMP_Text>().text = null;
 
-        p = FindObjectOfType<Pointer>();
+        p = FindObjectOfType<pVisible>();
         actText = FindObjectOfType<actionText>();
         control = FindObjectOfType<Controls>();
         // cPointer = FindObjectOfType(typeof(Pointer)) as GameObject;

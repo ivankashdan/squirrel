@@ -12,7 +12,7 @@ public class pointerChange : MonoBehaviour
     {
         if (NoChange == false)
         {
-            Pointer p = FindObjectOfType<Pointer>();
+            pVisible p = FindObjectOfType<pVisible>();
 
             if (p.holdingItem == false)
             {
@@ -30,7 +30,7 @@ public class pointerChange : MonoBehaviour
         if (NoChange == false)
         {
 
-            Pointer p = FindObjectOfType<Pointer>();
+            pVisible p = FindObjectOfType<pVisible>();
 
             if (p.holding == icon)
             {

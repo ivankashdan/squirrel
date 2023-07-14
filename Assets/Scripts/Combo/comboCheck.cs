@@ -13,9 +13,9 @@ public class comboCheck : MonoBehaviour
     public bool testNoTerminal;
 
     GameObject whirl;
-    Pointer p;
+    wObjects wO;
+    pVisible p;
     Inventory inv;
-    objectTalk objTalk;
 
     float timeLength = 0;
     public float timeLengthD = 1.25f;
@@ -30,9 +30,9 @@ public class comboCheck : MonoBehaviour
     {
         control = FindObjectOfType<Controls>().GetComponent<Controls>();
         whirl = FindObjectOfType<Character>().gameObject;
-        p = FindObjectOfType<Pointer>();
+        wO = FindObjectOfType<wObjects>();
+        p = FindObjectOfType<pVisible>();
         inv = FindObjectOfType<Inventory>();
-        objTalk = FindObjectOfType<objectTalk>();
 
         Sprite[] images = Resources.LoadAll("Combos", typeof(Sprite)).Cast<Sprite>().ToArray();
 
@@ -265,7 +265,7 @@ public class comboCheck : MonoBehaviour
             {
                 Gamepad.current.SetMotorSpeeds(0, 0);
             }
-            objTalk.elderComment();
+            wO.elderComment();
         }
         
 

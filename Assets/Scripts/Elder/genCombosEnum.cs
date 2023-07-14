@@ -1,0 +1,81 @@
+#if UNITY_EDITOR
+using System.Collections;
+using UnityEngine;
+using System.IO;
+
+
+public class genCombosEnum : MonoBehaviour
+{
+
+
+    [UnityEditor.MenuItem("Tools/Update Counters")]
+
+
+
+    public static void Go()
+    {
+        Character cRoger;
+        placeItem combo;
+        ArrayList comboNames;
+
+        cRoger = FindObjectOfType<Character>();
+        combo = FindObjectOfType<placeItem>();
+
+        comboNames = new ArrayList();
+
+        Object[] combos = Resources.LoadAll("Combos", typeof(Sprite));
+
+        Debug.Log(combos.Length);
+
+
+        foreach (Object c in combos)
+        {
+            comboNames.Add(c.name);
+        }
+
+        
+
+        comboNames.Sort();
+
+        string enumName = "combosEnum";
+        string filePathAndName = "Assets/Scripts/Elder/" + enumName + ".cs";
+
+        using (StreamWriter streamWriter = new StreamWriter(filePathAndName))
+        {
+
+            //GenerateHeader();
+            streamWriter.WriteLine("using System.Collections;");
+            streamWriter.WriteLine("using UnityEngine;");
+            streamWriter.WriteLine("using System.IO;");
+
+            Debug.Log(comboNames.Count);
+
+
+            //GenerateEnum(); 
+            for (int i = 0; i < comboNames.Count; i++)
+            {
+
+                string n = comboNames[i].ToString();
+
+               
+            }
+
+            Debug.Log(comboNames.Count);
+            comboNames.Sort();
+
+            streamWriter.WriteLine("public enum " + enumName);
+            streamWriter.WriteLine("{");
+            for (int i = 0; i < comboNames.Count; i++)
+            {
+                streamWriter.WriteLine("\t" + comboNames[i] + ",");
+            }
+            streamWriter.WriteLine("}");
+        }
+
+
+
+
+    }
+
+}
+#endif

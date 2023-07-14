@@ -5,7 +5,7 @@ using UnityEngine;
 public class checkInv : MonoBehaviour
 {
     private Inventory inv;
-    private Pointer p;
+    private pVisible p;
 
     string storedName;
 
