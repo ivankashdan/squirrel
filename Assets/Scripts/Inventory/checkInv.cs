@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class checkInv : MonoBehaviour
 {
     private Inventory inv;
-    private pVisible p;
-
     string storedName;
-
     public List<string> possCombos = new List<string>();
     
 
@@ -18,11 +16,38 @@ public class checkInv : MonoBehaviour
 
     }
 
-    private void Update()
+    public string newComboName(string addition, string original)
     {
 
+        List<string> parts = new List<string>();
+
+        if (original.Contains("_"))
+        {
+            parts = original.Split(char.Parse("_")).ToList();
+        }
+        else
+        {
+            parts.Add(original);
+        }
+
+        parts.Add(addition);
+        parts.Sort();
+        string name = "";
+
+        foreach (string p in parts)
+        {
+            if (name != "")
+                name += "_";
+            name += p;
+        }
+
+        return name;
+
+    }
 
 
+    private void Update()
+    {
 
         if (gameObject.GetComponent<SpriteRenderer>().sprite == null) //if combo is occupied by no Object (do nothing) 
         {
@@ -32,15 +57,17 @@ public class checkInv : MonoBehaviour
         else
         {
 
-            string comboName = this.gameObject.GetComponent<SpriteRenderer>().sprite.name;  //comboName
+            string comboName = gameObject.GetComponent<SpriteRenderer>().sprite.name;  
 
-            if (storedName != comboName)
+            if (storedName != comboName)   //if combo is the same as before, do nothing
             {
+                storedName = comboName; //if combo is new, store name
+
                 possCombos.Clear();
 
                 for (int index = 0; index < inv.transform.childCount; ++index)
                 {
-                    GameObject invItem = this.inv.transform.GetChild(index).gameObject; //invItem
+                    GameObject invItem = inv.transform.GetChild(index).gameObject; //invItem
 
                     if (invItem.GetComponent<SpriteRenderer>().sprite == null)
                     {
@@ -48,64 +75,20 @@ public class checkInv : MonoBehaviour
                         {
                             string takenName = invItem.GetComponent<Slot>().taken.name;  //slotItem Taken Name
 
-
-                            //need to reinstate var combos here too, but it is an expensive check
-
-
-                            if ((Resources.Load("Combos/" + comboName + "_" + takenName))
-                                || (Resources.Load("Combos/" + takenName + "_" + comboName)))
+                            if (Resources.Load("Combos/" + newComboName(takenName, comboName)))  //get what would be the new combo name, and check if it exists before making the item available
                             {
-                                //Debug.Log("Trueee!");
                                 invItem.GetComponent<SpriteRenderer>().sprite = invItem.GetComponent<Slot>().taken;
                                 invItem.GetComponent<Slot>().taken = null;
                             }
                         }
                     }
-                    else if (invItem.GetComponent<SpriteRenderer>().sprite != null)  //if invItem is not empty
+                    else if (invItem.GetComponent<SpriteRenderer>().sprite != null)  //if invItem is not empty, remove from Slot and send to taken
                     {
-
                         string slotItem = invItem.GetComponent<SpriteRenderer>().sprite.name; //slotItem Name
 
-                        bool varPresent = false;
-
-                        if (comboName.Contains("_"))  //check all possible variations for 3-tier if 2-tier combo present
+                        if (Resources.Load("Combos/" + newComboName(slotItem, comboName)) == false)
                         {
-
-                            //Debug.Log("check made");
-
-                            string[] parts = comboName.Split(char.Parse("_")); //break into parts
-
-                            List<string> par = new List<string>();
-                            List<string> var = new List<string>();
-
-                            genList(parts, slotItem, par, var);
-
-                            for (int v = 0; v < var.Count; v++)
-                            {
-                                if (Resources.Load("Combos/" + var[v]))
-                                {
-                                    varPresent = true;
-                                    possCombos.Add(var[v]);
-                                    //Debug.Log("combo found!");
-                                    break;
-                                }
-
-                            }
-                            foreach (string p in possCombos)
-                            {
-                                Debug.Log(p);
-                            }
-                            //foreach (string v in var)
-                            //{
-                            //    //Debug.Log(v);
-                            //}
-
-                        }
-
-                        if ((Resources.Load("Combos/" + comboName + "_" + slotItem) == false)
-                            && (Resources.Load("Combos/" + slotItem + "_" + comboName) == false)
-                            && varPresent == false)
-                        {
+                            //Debug.Log(newComboName(slotItem, comboName) + " is false");
                             invItem.GetComponent<Slot>().taken = invItem.GetComponent<SpriteRenderer>().sprite;  
                             invItem.GetComponent<SpriteRenderer>().sprite = null;
                         }
@@ -115,49 +98,11 @@ public class checkInv : MonoBehaviour
                 }
 
             }
-
-            storedName = comboName;
+ 
             
         }
         
     }
 
-    public void genList(string[] p, string h, List<string> par, List<string> var)
-    {
-        for (int a = 0; a < p.Length; a++)
-        {
-            par.Add(p[a]);
-
-        }
-
-        par.Add(h);
-
-        if (par.Count == 3)
-        {
-
-            for (int a = 0; a < par.Count; a++)
-            {
-                for (int b = 0; b < par.Count; b++)
-                {
-                    for (int c = 0; c < par.Count; c++)
-                    {
-
-                        if (par[c] != par[b] && par[c] != par[a] && par[b] != par[a])
-                        {
-                            var.Add(par[c] + "_" + par[b] + "_" + par[a]);
-                        }
-
-
-                    }
-
-                }
-
-            }
-
-
-
-        }
-
-    }
 
 }

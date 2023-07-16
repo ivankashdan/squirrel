@@ -21,9 +21,7 @@ public class comboCheck : MonoBehaviour
     public float timeLengthD = 1.25f;
     //int timeLength = 70;
 
-    List<string> combos = new List<string>(); // is it expensive loading these images?
-
-    bool cursorSwitch = true;
+    List<string> combos = new List<string>(); // is it expensive loading these images?    //necessary now we have an enum?????
 
 
     private void Start()
@@ -36,7 +34,7 @@ public class comboCheck : MonoBehaviour
 
         Sprite[] images = Resources.LoadAll("Combos", typeof(Sprite)).Cast<Sprite>().ToArray();
 
-        foreach (Sprite s in images)
+        foreach (Sprite s in images)            //NECESSARY????
         {
             combos.Add(s.name);
         }
@@ -69,48 +67,20 @@ public class comboCheck : MonoBehaviour
            
         }
 
-        if (timeOn && !whirl.GetComponent<Character>().cSpoken)
-        {
-            if (cursorSwitch)
-            {
-                //p.toggleCursor();
-                cursorSwitch = false;
-            }
-         
-
-        }
-        else
-        {
-            if (cursorSwitch == false)
-            {
-                //p.toggleCursor();
-                cursorSwitch = true;
-            }
-        }
 
         if (!(gameObject.GetComponent<SpriteRenderer>().sprite != null))
         {
             return;
         }
 
-        comboName = gameObject.GetComponent<SpriteRenderer>().sprite.name;
-        string str = "";
-        string[] strArray = comboName.Split(char.Parse("_"));
-        if (strArray.Length == 2)
-        {
-            str = strArray[1] + "_" + strArray[0];
-        }
+        comboName = gameObject.GetComponent<SpriteRenderer>().sprite.name;  
 
-        if (control.getSpecial(comboName) != "")
+
+        if (control.getSpecial(comboName) != "") //this is checking repeatedly! Find a way to just do it once   //getSpecial
         {
-            newItem(control.getSpecial(comboName), comboName);
+            newItem(control.getSpecial(comboName), comboName);  //getSpecial
         }
-        else
-        {
-            if (!(control.getSpecial(str) != ""))
-                return;
-            newItem(control.getSpecial(str), str);
-        }
+        
     }
 
 
@@ -135,19 +105,6 @@ public class comboCheck : MonoBehaviour
 
     }
 
-    //void checkSpool(string i)
-    //{
-    //    if (i == "bird_fire")
-    //    {
-    //        unSpool(i);
-    //    }
-
-    //}
-
-    //void unSpool(string i)
-    //{
-
-    //}
 
 
     private void newItem(string special, string recipe)
@@ -218,7 +175,7 @@ public class comboCheck : MonoBehaviour
             {
                 foreach (string s in combos)
                 {
-                    Debug.Log(s);
+                    //Debug.Log(s);
 
                     if (s.Contains(special + "_") || s.Contains("_" + special))
                     {

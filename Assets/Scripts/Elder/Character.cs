@@ -6,35 +6,17 @@ using TMPro;
 public class Character : MonoBehaviour
 {
 
-    //Meters
-     int dialogueStored;
-     float realTime;
-
-
     //delay for voice and dotdot
-     float timeUntilClick = 0.1f;   //time until I can click
+    float timeUntilClick = 0.1f;   //time until I can click
     float tTimer;
 
+    public bool cSpoken; //has cSpoken?
 
-    //dotdot
-     float dotGap = 0.5f;
-    float dotTimer;
-    string dotString;
-    int addDot = 0;
+    public GameObject voice; //selected voice
 
-    //has cSpoken?
-    public bool cSpoken;
-
-    //selected voice
-    public GameObject voice;
-   // GameObject cPointer;
-
-    //dialogue list
-    ArrayList toDo = new ArrayList();
+    ArrayList toDo = new ArrayList(); //dialogue list
 
     pVisible p;
-    actionText actText;
-    Controls control;
 
     public AudioClip[] vocals;
 
@@ -55,8 +37,6 @@ public class Character : MonoBehaviour
         voice.GetComponent<TMP_Text>().text = null;
 
         p = FindObjectOfType<pVisible>();
-        actText = FindObjectOfType<actionText>();
-        control = FindObjectOfType<Controls>();
         // cPointer = FindObjectOfType(typeof(Pointer)) as GameObject;
     }
 
@@ -96,9 +76,6 @@ public class Character : MonoBehaviour
         }
         
 
-        dialogueStored = toDo.Count;
-        realTime = Time.fixedTime;
-
         if (cSpoken == true)
         {
 
@@ -114,50 +91,10 @@ public class Character : MonoBehaviour
 
             }
 
-            //dotDot();  //turn back on for dot dot dot animation
 
         }
     }
 
-
-    public void dotDot()
-    {
-
-        switch (addDot)
-        {
-            case 0:
-
-                if (Time.fixedTime > dotTimer + 1 * dotGap)
-                {
-
-                    voice.GetComponent<TMP_Text>().text = dotString + "\n.";
-                    addDot = 1;
-                }
-                return;
-            case 1:
-
-                if (Time.fixedTime > dotTimer + 2 * dotGap)
-                {
-                    voice.GetComponent<TMP_Text>().text = dotString + "\n..";
-                    addDot = 2;
-
-                }
-                return;
-            case 2:
-                if (Time.fixedTime > dotTimer + 3 * dotGap)
-                {
-                    voice.GetComponent<TMP_Text>().text = dotString + "\n...";
-                    addDot = 0;
-
-                    dotTimer = Time.fixedTime;
-                }
-                return;
-            
-
-        }
-
-
-    }
 
     public void clickThroughDialogue()
     {
@@ -187,16 +124,8 @@ public class Character : MonoBehaviour
     }
 
 
-    
-
-
-
     public void Say(string dialogue)
     {
-
-
-        
-
         if (p.isBlocking==false)
         {
             p.toggleCursor();
@@ -208,60 +137,17 @@ public class Character : MonoBehaviour
 
         Speak();
 
-        // Sing();
-
-
-        
-
     }
 
-    void Sing()
-    {
-
-        int ran = Random.Range(0, vocals.Length);
-
-        for (int i = 0; i < vocals.Length; i++)
-        {
-
-            if (vocals[ran])
-            {
-
-                AudioSource aS = GetComponent<AudioSource>();
-
-               //float ranP = Random.Range(0.75f, 1.25f);
-               // aS.pitch = ranP;
-
-                aS.clip = vocals[ran];
-                aS.Play();
-
-                
-
-                return;
-
-            }
-
-        }
-
-
-
-
-    }
 
     public void Speak()
     {
        
-
-
         voice.GetComponent<TMP_Text>().text = toDo[0].ToString();
-
-        dotString = voice.GetComponent<TMP_Text>().text;
 
         cSpoken = true;
         
         tTimer = Time.fixedTime;
-        dotTimer = Time.fixedTime;
-
-        
 
 
     }
@@ -269,23 +155,14 @@ public class Character : MonoBehaviour
 
     public void SayBackground(string dialogue)
     {
-        //toDo.Add(dialogue);
-        //StartCoroutine(Speak(toDo));
-        SpeakBackground(dialogue);
 
-    }
-
-
-    public void SpeakBackground(string dialogue)
-    {
         Debug.Log(dialogue);
         voice.GetComponent<TMP_Text>().text = dialogue;
 
         backSwitch = true;
         backTimer = 0;
-
-
     }
+
 
     public void Wait(float i)
     {
@@ -301,147 +178,6 @@ public class Character : MonoBehaviour
     }
 
 
-    public IEnumerator Speak(ArrayList dialogue)
-    {
-
-      
-
-        for (int i = 0; i < dialogue.Count; i++)
-        {
-
-
-            Debug.Log(dialogue[i]);
-
-            voice.GetComponent<TMP_Text>().text = dialogue[i].ToString();
-
-
-            yield return new WaitForSeconds(3);
-
-
-            // dialogue.RemoveAt(i);
-            // i -= 1;
-
-            voice.GetComponent<TMP_Text>().text = null;
-
-            
-        }
-
-
-        dialogue.Clear();
-
-        
-
-
-
-
-
-
-    }
-
-
-    /*
-        public void toggleCollider()
-        {
-
-            if (p.isBlocking)
-            {
-
-
-
-                object[] c = GetComponents(typeof(Collider2D));
-                foreach (Collider2D collider in c)
-                {
-
-                    if (collider.enabled)
-                    {
-                        collider.enabled = false;
-                    }
-
-                    else
-                    {
-                        collider.enabled = true;
-                    }
-
-
-                }
-
-            }
-            else
-            {
-
-            }
-
-        }
-      */
-
-
-
-
-
-    /*
-
-    public void Say(string dialogue)
-    {
-
-        toDo.Add(dialogue);
-        StartCoroutine(Speak(toDo));
-
-
-    }
-
-
-
-    public void Interrupt()
-    {
-     
-        toDo.Clear();
-
-    }
-
-
-
-    public IEnumerator Speak(ArrayList dialogue) 
-    {
-
-
-        for (int i = 0; i < dialogue.Count; i++)
-        {
-            Debug.Log(dialogue[i]);
-
-            wText wt = FindObjectOfType<wText>();
-            wt.GetComponent<TMP_Text>().text = dialogue[i].ToString();
-
-
-                yield return new WaitForSeconds(2);
-
-
-           // dialogue.RemoveAt(i);
-           // i -= 1;
-
-            wt.GetComponent<TMP_Text>().text = null;
-
-
-        }
-
-
-       dialogue.Clear();
-
-        
-
-
-
-
-
-
-    }
-
-    
-
-
-
-
-
-    */
 
 
 }

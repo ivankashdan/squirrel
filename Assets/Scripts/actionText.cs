@@ -89,51 +89,9 @@ public class actionText : MonoBehaviour
 
 
 
-        if (control.gameObject.GetComponent<Controls>().controller == false)  //ALL THIS IS CURRENTLY NOT USED
-        {
-
-
-           
-           
-
-          
-
-
-            if (combo.GetComponent<SpriteRenderer>().sprite == null) //if there is no combo
-            {
-
-
-                //if (p.GetComponent<Pointer>().holding.name == "hand")
-                //{
-                //    //gameObject.GetComponent<TMP_Text>().text = "'LMB' to select";
-                //    //gameObject.GetComponent<TMP_Text>().text = "Press 'B' to unspool / 'A' to select";
-                //}
-                if (control.GetComponent<Controls>().getRecipe(control.GetComponent<Controls>().selectedItem) != "")
-                {
-
-
-
-                    //gameObject.GetComponent<TMP_Text>().text = "Press 'RMB' to unspool / 'LMB' to select";
-                    //gameObject.GetComponent<TMP_Text>().text = "Press 'RMB' to unspool";
-                }
-                else
-                {
-                    //gameObject.GetComponent<TMP_Text>().text = "Press 'LMB' to select";
-                    //gameObject.GetComponent<TMP_Text>().text = "";
-                }
-            }
-            else //if there is a combo
-            {
-                //gameObject.GetComponent<TMP_Text>().text = "'LMB' to select / 'RMB' to return";
-            }
-            
-                
-        }
-        else  //if controller present
+        if (control.gameObject.GetComponent<Controls>().controller)  //if controller present
         {
             timer++;
-
-
 
             if (timer > delay)
             {
@@ -145,6 +103,8 @@ public class actionText : MonoBehaviour
 
                         if (control.GetComponent<Controls>().getRecipe(control.GetComponent<Controls>().selectedItem) != "")
                         {
+                            Debug.Log("Unspool detected");
+
                             gameObject.GetComponent<TMP_Text>().text = "Press 'B' to unspool / 'A' to select";
                             //a.GetComponent<SpriteRenderer>().enabled = true;
                             //b.GetComponent<SpriteRenderer>().enabled = true;

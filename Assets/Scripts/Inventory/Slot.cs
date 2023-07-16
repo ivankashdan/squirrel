@@ -93,11 +93,14 @@ public class Slot : MonoBehaviour
                     {
                         if (controls.getRecipe(controls.selectedItem) != "" && combo.GetComponent<SpriteRenderer>().sprite == null)
                         {
+                            //Debug.Log("unspool detected");
                             hoverText.GetComponent<TMP_Text>().text = "Press 'RMB' to unspool / 'LMB' to select";
 
                         }
                         else
                         {
+                            //Debug.Log(controls.getRecipe(controls.selectedItem));
+
                             hoverText.GetComponent<TMP_Text>().text = "Press 'LMB' to select";
                         }
                     }

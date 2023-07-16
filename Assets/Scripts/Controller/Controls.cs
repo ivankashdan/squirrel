@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
@@ -27,6 +28,62 @@ public class Controls : MonoBehaviour
     public bool controller;
 
 
+    //Dictionary<string, string> recipes = new Dictionary<string, string>()
+    //{
+
+    //    {"sock_stick", "tent"},
+    //    {"bottle_sock", "birdBS"},
+    //    {"feather_grass", "birdGF"},
+    //    {"ribbon_stick", "catkin"},
+    //    {"bottle_rock", "drum"},
+    //    {"rock_stick", "fire"},
+    //    {"bottle_catkin", "flowerpot"},
+    //    {"grass_sock", "pillow"},
+    //    {"bottle_grass", "plutonium"},
+    //    //{"ribbon_stocking", "present"},
+    //    {"rock_sock", "stocking"},
+    //    {"pillow_ribbon", "sushi"},
+    //    {"acorn_bottle", "teapot"},
+    //    {"fire_teapot", "tea" },
+    //    {"feather_ribbon", "kite"},
+    //    {"kite_plutonium", "rocket"},
+    //    {"grass_rock_stick", "snail"},
+    //    {"drum_stick","lightning"},
+
+    //    {"acorn_catkin","squirrel"},
+    //    {"grass_squirrel", "tree"},
+    //    {"feather_sock_tree", "baby"}
+    //    //{"stick_sock", "bbq"},
+    //    //{"bbq_grass", "food"},
+    //};
+
+    Dictionary<combosEnum, combosEnum> recipe = new Dictionary<combosEnum, combosEnum>()
+    {
+        {combosEnum.sock_stick, combosEnum.tent},
+        {combosEnum.bottle_sock, combosEnum.birdBS},
+        {combosEnum.feather_grass, combosEnum.birdGF},
+        {combosEnum.ribbon_stick, combosEnum.catkin},
+        {combosEnum.bottle_rock, combosEnum.drum},
+        {combosEnum.rock_stick, combosEnum.fire},
+        {combosEnum.bottle_catkin, combosEnum.flowerpot},
+        {combosEnum.grass_sock, combosEnum.pillow},
+        {combosEnum.bottle_grass, combosEnum.plutonium},
+        {combosEnum.rock_sock, combosEnum.stocking},
+        {combosEnum.pillow_ribbon, combosEnum.sushi},
+        {combosEnum.acorn_bottle, combosEnum.teapot},
+        {combosEnum.fire_teapot, combosEnum.tea},
+        {combosEnum.feather_ribbon, combosEnum.kite},
+        {combosEnum.kite_plutonium, combosEnum.rocket},
+        {combosEnum.grass_rock_stick, combosEnum.snail},
+        {combosEnum.drum_stick, combosEnum.lightning},
+        {combosEnum.acorn_catkin, combosEnum.squirrel},
+        {combosEnum.grass_squirrel, combosEnum.tree},
+        {combosEnum.feather_sock_tree, combosEnum.baby}
+    };
+
+   
+
+
     private void Start()
     {
         combo = FindObjectOfType<placeItem>().gameObject;
@@ -36,6 +93,9 @@ public class Controls : MonoBehaviour
         p = FindObjectOfType<pVisible>();
 
         slotNumber = 0;
+
+        
+
        
     }
 
@@ -286,7 +346,7 @@ public class Controls : MonoBehaviour
             for (int i = 0; i < inv.transform.childCount; ++i)
             {
                 GameObject invItem = inv.transform.GetChild(i).gameObject;
-                Debug.Log(invItem.GetComponent<PolygonCollider2D>().bounds.size.x);
+                //Debug.Log(invItem.GetComponent<PolygonCollider2D>().bounds.size.x);
                 if (invItem.GetComponent<PolygonCollider2D>().bounds.size.x > 0.4f)
                 {
                     invItem.transform.localScale = new Vector3(0.5f, 0.5f, 0); //replace with accurate reduction
@@ -305,19 +365,19 @@ public class Controls : MonoBehaviour
     }
 
 
-    public void unSpool(string s)
+    public void unSpool(string selectedItem)
     {
         GameObject inv = FindObjectOfType<Inventory>().gameObject;
 
         string firstPart = "";
 
-        if (getRecipe(s) == "")
+        if (getRecipe(selectedItem) == "")
         {
             return;
         }
         else
         {
-            string recipe = getRecipe(s);
+            string recipe = getRecipe(selectedItem);
             char[] chArray = new char[1] { char.Parse("_") };
 
 
@@ -379,119 +439,61 @@ public class Controls : MonoBehaviour
            
         }
 
-
-
     }
 
-    public string getRecipe(string i)
+    public string getRecipe(string value)
     {
-        switch (i)
+
+        if (value != "")
         {
-            case "bbq":
-                return "stick_sock";
-            case "tent":
-                return "sock_stick";
-            case "birdBS":
-                return "bottle_sock";
-            case "birdGF":
-                return "feather_grass";
-            case "catkin":
-                return "stick_ribbon";
-            case "drum":
-                return "bottle_rock";
-            case "fire":
-                return "stick_rock";
-            case "flowerpot":
-                return "bottle_catkin";
-            case "pillow":
-                return "sock_grass";
-            case "plutonium":
-                return "grass_bottle";
-            case "present":
-                return "stocking_ribbon";
-            case "stocking":
-                return "sock_rock";
-            case "sushi":
-                return "pillow_ribbon";
-            case "teapot":
-                return "acorn_bottle";
-            case "tea":
-                return "teapot_fire";
-            case "kite":
-                return "feather_ribbon";
-            case "rocket":
-                return "kite_plutonium";
-            case "food":
-                return "bbq_grass";
-            case "snail":
-                return "grass_rock_stick";
-            case "lightning":
-                return "drum_stick";
-            case "squirrel":
-                return "catkin_acorn";
-            case "tree":
-                return "squirrel_grass";
-            case "baby":
-                return "tree_feather_sock";
-            default:
-                return "";
+            combosEnum v = (combosEnum)System.Enum.Parse(typeof(combosEnum), value);  //must be enum = i turned into an enum
+
+            if (recipe.ContainsValue(v))
+            {
+                foreach (var r in recipe)
+                {
+                    if (r.Value == v)
+                    {
+                        Debug.Log(r.Key.ToString());
+                        return r.Key.ToString();
+                    }
+                }
+
+            }
+
         }
+        return "";
+
+
     }
 
-    public string getSpecial(string i)
+    public string getSpecial(string key)
     {
-        switch (i)
+
+        if (key != "")
         {
-            case "stick_sock":
-                return "bbq";
-            case "sock_stick":
-                return "tent";
-            case "acorn_bottle":
-                return "teapot";
-            case "teapot_fire":
-                return "tea";
-            case "bottle_catkin":
-                return "flowerpot";
-            case "bottle_rock":
-                return "drum";
-            case "bottle_sock":
-                return "birdBS";
-            case "feather_grass":
-                return "birdGF";
-            case "grass_bottle":
-                return "plutonium";
-            case "pillow_ribbon":
-                return "sushi";
-            case "present":
-                return "stocking_ribbon";
-            case "sock_grass":
-                return "pillow";
-            case "sock_rock":
-                return "stocking";
-            case "stick_ribbon":
-                return "catkin";
-            case "stick_rock":
-                return "fire";
-            case "feather_ribbon":
-                return "kite";
-            case "kite_plutonium":
-                return "rocket";
-            case "bbq_grass":
-                return "food";
-            case "grass_rock_stick":
-                return "snail";
-            case "drum_stick":
-                return "lightning";
-            case "catkin_acorn":
-                return "squirrel";
-            case "squirrel_grass":
-                return "tree";
-            case "tree_feather_sock":
-                return "baby";
-            default:
-                return "";
+            combosEnum k = (combosEnum)System.Enum.Parse(typeof(combosEnum), key);  //must be enum = i turned into an enum
+
+            if (recipe.ContainsKey(k))
+            {
+                foreach (var r in recipe)
+                {
+                    if (r.Key == k)
+                    {
+                        Debug.Log(r.Value.ToString());
+                        return r.Value.ToString();
+                    }
+                }
+
+            }
+
         }
+        return "";
+
+
     }
+
+
 
 
 
