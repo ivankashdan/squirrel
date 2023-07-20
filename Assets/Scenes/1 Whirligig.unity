@@ -1156,6 +1156,7 @@ MonoBehaviour:
   timer: 0
   timeOn: 0
   testNoTerminal: 0
+  timeLength: 0
   timeLengthD: 1.25
 --- !u!114 &655973529
 MonoBehaviour:
@@ -1249,7 +1250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 768620531}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd523a9b79c5dca47adbfa52ef58480f, type: 3}
+  m_Script: {fileID: 11500000, guid: fa40ec80b34a4c24b8206b56554cfc7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   selectedItem: 

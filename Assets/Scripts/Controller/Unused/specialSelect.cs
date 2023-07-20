@@ -9,7 +9,7 @@ public class specialSelect : MonoBehaviour
     
     void Start()
     {
-        control = FindObjectOfType<Controls>().gameObject;
+        control = FindObjectOfType<gamePad>().gameObject;
 
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
@@ -20,7 +20,7 @@ public class specialSelect : MonoBehaviour
     void Update()
     {
         
-        if (control.GetComponent<Controls>().selectedItem != null)
+        if (control.GetComponent<gamePad>().selectedItem != null)
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = true;
         }

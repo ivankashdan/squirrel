@@ -8,19 +8,21 @@ public class clickCombo : MonoBehaviour
 
     public bool hover = false;
 
-    Controls controls;
+    gamePad controls;
     pVisible p;
     actionText txt;
     Character whirl;
     placeItem combo;
+    Inventory inv;
 
     void Start()
     {
-        controls = FindObjectOfType<Controls>();
+        controls = FindObjectOfType<gamePad>();
         p = FindObjectOfType<pVisible>();
         txt = FindObjectOfType<actionText>();
         whirl = FindObjectOfType<Character>();
         combo = FindObjectOfType<placeItem>();
+        inv = FindObjectOfType<Inventory>();
     }
 
 
@@ -61,7 +63,7 @@ public class clickCombo : MonoBehaviour
                     {
                         if (combo.GetComponent<comboCheck>().timeOn == false)
                         {
-                            controls.reset();
+                            inv.reset();
                         }
                     }
                 }

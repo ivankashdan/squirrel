@@ -7,16 +7,19 @@ public class Slot : MonoBehaviour
 {
 
     public Sprite taken;
-    pVisible p;
-    pVisible pointer;
     Sprite sprite;
+    string currentSprite;
+
     placeItem combo;
     actionText hoverText;
     Character whirl;
-    Controls controls;
-    selector select;
+    gamePad controls;
+    Inventory inv;
+    comboCheck check;
 
     bool hover;
+    bool changed = false;
+
 
 
     private void Start()
@@ -24,28 +27,93 @@ public class Slot : MonoBehaviour
         combo = FindObjectOfType<placeItem>();
         hoverText = FindObjectOfType<actionText>();
         whirl = FindObjectOfType<Character>();
-        controls = FindObjectOfType<Controls>();
-        select = FindObjectOfType<selector>();
+        controls = FindObjectOfType<gamePad>();
+        inv = FindObjectOfType<Inventory>();
+        check = FindObjectOfType<comboCheck>();
+
     }
 
+    
+
+    private void FixedUpdate()
+    {
+        if (gameObject.GetComponent<SpriteRenderer>().sprite != null)
+        {
+            if (gameObject.GetComponent<SpriteRenderer>().sprite.name != currentSprite)
+            {
+                changed = true;
+            }
+
+            if (changed)
+            {
+
+               
+                
+
+                float sizeLimit = 0.4f;
+                float itemSizeX = gameObject.GetComponent<PolygonCollider2D>().bounds.size.x;
+                float itemSizeY = gameObject.GetComponent<PolygonCollider2D>().bounds.size.y;
+
+                if (itemSizeX > sizeLimit || itemSizeY > sizeLimit)     
+                {
+                    while (itemSizeX > sizeLimit || itemSizeY > sizeLimit)
+                    {
+                        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.01f, gameObject.transform.localScale.y - 0.01f, 0);
+
+                        itemSizeX *= 0.99f;
+                        itemSizeY *= 0.99f;
+
+                    }
+                    Debug.Log("new item size = " + itemSizeX + " and " + itemSizeY);
+
+
+
+
+                }
+                else
+                {
+                    transform.localScale = new Vector3(1, 1, 1);  //need this for unspool
+                }
+
+
+                currentSprite = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+
+
+
+                changed = false;
+                drawHotspot(gameObject);
+
+            }
+
+            if (gameObject.GetComponent<SpriteRenderer>().sortingLayerName == "Behind")
+                gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "UI"; //if item is hidden for resize, reveal
+
+        }
+        else
+        {
+            currentSprite = "";
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        
+
+    }
 
     void Update()
     {
-
-
         if (combo.GetComponent<SpriteRenderer>().sprite == null) //so long as there is no combo
         {
             if (hover) //if hovering over this slot
             {
                 if (Input.GetMouseButtonUp(1))
                 {
-                    controls.unSpool(controls.selectedItem);
+                    inv.unSpool(controls.selectedItem);
                 }
             }
             
         }
        
-        if (whirl.cSpoken)
+        if (whirl.cSpoken || check.transformTrigger)
         {
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
         }
@@ -82,16 +150,16 @@ public class Slot : MonoBehaviour
         if (taken==null && sprite!=null)
         {
 
-            if (controls.GetComponent<Controls>().controller == false)  //NEW CODE
+            if (controls.GetComponent<gamePad>().controller == false)  //NEW CODE
             {
 
-                controls.GetComponent<Controls>().selectedItem = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+                controls.GetComponent<gamePad>().selectedItem = gameObject.GetComponent<SpriteRenderer>().sprite.name;
 
                 if (gameObject.GetComponent<SpriteRenderer>().sprite!=null)
                 {
                     if (!whirl.cSpoken)
                     {
-                        if (controls.getRecipe(controls.selectedItem) != "" && combo.GetComponent<SpriteRenderer>().sprite == null)
+                        if (inv.getRecipe(controls.selectedItem) != "" && combo.GetComponent<SpriteRenderer>().sprite == null)
                         {
                             //Debug.Log("unspool detected");
                             hoverText.GetComponent<TMP_Text>().text = "Press 'RMB' to unspool / 'LMB' to select";
@@ -122,9 +190,9 @@ public class Slot : MonoBehaviour
         if (!whirl.cSpoken)
         {
 
-                if (controls.GetComponent<Controls>().controller == false)  //NEW CODE
+                if (controls.GetComponent<gamePad>().controller == false)  //NEW CODE
                 {
-                controls.GetComponent<Controls>().selectedItem = null;
+                controls.GetComponent<gamePad>().selectedItem = null;
                 hoverText.GetComponent<TMP_Text>().text = "";
                 
             }
@@ -138,16 +206,36 @@ public class Slot : MonoBehaviour
 
     }
 
+    public void drawHotspot(GameObject obj) //WIP /////////Regnerate hotspot using saved file if exists  //there are 2 of these... need just 1
+    {
+
+        bool hsFound = false;
+        if (Resources.Load("Combos/Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name))
+        {
+            obj.GetComponent<SpriteRenderer>().sprite = Resources.Load("Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name, typeof(Sprite)) as Sprite;
+            hsFound = true;
+        }
+        if (obj.GetComponent<PolygonCollider2D>())
+        {
+            Destroy(obj.GetComponent<PolygonCollider2D>());
+            obj.AddComponent<PolygonCollider2D>();
+        }
+
+        if (hsFound)
+        {
+            obj.GetComponent<SpriteRenderer>().sprite = Resources.Load("Combos/" + obj.GetComponent<SpriteRenderer>().sprite.name, typeof(Sprite)) as Sprite;
+        }
+    }
 
 
-    
 
 
 
-    
 
 
-    
+
+
+
 }
 
 

@@ -5,14 +5,18 @@ using UnityEngine;
 
 public class checkInv : MonoBehaviour
 {
-    private Inventory inv;
+    Inventory inv;
+    comboCheck check;
+    pVisible p;
+
     string storedName;
-    public List<string> possCombos = new List<string>();
     
 
     private void Start()
     {
         inv = FindObjectOfType<Inventory>();
+        check = FindObjectOfType<comboCheck>();
+        p = FindObjectOfType<pVisible>();
 
     }
 
@@ -46,7 +50,7 @@ public class checkInv : MonoBehaviour
     }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
 
         if (gameObject.GetComponent<SpriteRenderer>().sprite == null) //if combo is occupied by no Object (do nothing) 
@@ -54,7 +58,8 @@ public class checkInv : MonoBehaviour
             storedName = "_";
             return;
         }
-        else
+        else 
+        //if (!check.transformTrigger && p.gameObject.GetComponent<SpriteRenderer>().sprite!=null)
         {
 
             string comboName = gameObject.GetComponent<SpriteRenderer>().sprite.name;  
@@ -63,7 +68,6 @@ public class checkInv : MonoBehaviour
             {
                 storedName = comboName; //if combo is new, store name
 
-                possCombos.Clear();
 
                 for (int index = 0; index < inv.transform.childCount; ++index)
                 {

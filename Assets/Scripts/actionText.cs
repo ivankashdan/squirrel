@@ -8,18 +8,12 @@ public class actionText : MonoBehaviour
 
     public bool itemText;
 
-    GameObject a;
-    GameObject b;
-    GameObject y;
 
     GameObject select;
     GameObject whirl;
     GameObject combo;
-    GameObject control;
     GameObject inv;
-    //GameObject voice;
-
-    pVisible p;
+    gamePad gPad;
 
     int timer;
     int delay = 10;
@@ -27,18 +21,12 @@ public class actionText : MonoBehaviour
 
     private void Start()
     {
-        a = FindObjectOfType<followSelect>().gameObject;
-        b = FindObjectOfType<specialSelect>().gameObject;
-        y = FindObjectOfType<checkInvEmpty>().gameObject;
 
         select = FindObjectOfType<selector>().gameObject;
         whirl = FindObjectOfType<Character>().gameObject;
         combo = FindObjectOfType<placeItem>().gameObject;
-        control = FindObjectOfType<Controls>().gameObject;
         inv = FindObjectOfType<Inventory>().gameObject;
-        //voice = FindObjectOfType<colourRoom>().gameObject;
-
-        p = FindObjectOfType<pVisible>();
+        gPad = FindObjectOfType<gamePad>();
 
     }
 
@@ -65,7 +53,7 @@ public class actionText : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (control.gameObject.GetComponent<Controls>().controller == false)
+        if (gPad.controller == false)
         {
             if (whirl.GetComponent<Character>().cSpoken)
             {
@@ -85,11 +73,7 @@ public class actionText : MonoBehaviour
             }
         }
 
-
-
-
-
-        if (control.gameObject.GetComponent<Controls>().controller)  //if controller present
+        if (gPad.controller)  //if controller present
         {
             timer++;
 
@@ -101,25 +85,15 @@ public class actionText : MonoBehaviour
                     if (combo.GetComponent<SpriteRenderer>().sprite == null) //quick fix - don't let unspool happen when stacking
                     {
 
-                        if (control.GetComponent<Controls>().getRecipe(control.GetComponent<Controls>().selectedItem) != "")
+                        if (inv.GetComponent<Inventory>().getRecipe(gPad.GetComponent<gamePad>().selectedItem) != "")
                         {
                             Debug.Log("Unspool detected");
 
                             gameObject.GetComponent<TMP_Text>().text = "Press 'B' to unspool / 'A' to select";
-                            //a.GetComponent<SpriteRenderer>().enabled = true;
-                            //b.GetComponent<SpriteRenderer>().enabled = true;
-                            //y.GetComponent<SpriteRenderer>().enabled = false;
-
-                            //a.transform.localPosition = new Vector3((0 + 2.33f), a.transform.localPosition.y, a.transform.localPosition.z);
                         }
                         else
                         {
                             gameObject.GetComponent<TMP_Text>().text = "Press 'A' to select";
-                            //a.GetComponent<SpriteRenderer>().enabled = true;
-                            //b.GetComponent<SpriteRenderer>().enabled = false;
-                            //y.GetComponent<SpriteRenderer>().enabled = false;
-
-                            //a.transform.localPosition = new Vector3((0 - 0.72f), a.transform.localPosition.y, a.transform.localPosition.z);
                         }
 
 
@@ -129,69 +103,31 @@ public class actionText : MonoBehaviour
                     else
                     {
                         gameObject.GetComponent<TMP_Text>().text = "Press 'A' to select / 'Y' to return";
-                        //a.GetComponent<SpriteRenderer>().enabled = true;
-                        //b.GetComponent<SpriteRenderer>().enabled = false;
-                        //y.GetComponent<SpriteRenderer>().enabled = false;
-
-                        //a.transform.localPosition = new Vector3((0-0.72f), a.transform.localPosition.y, a.transform.localPosition.z);
-
                     }
 
                 }
                 else if (whirl.GetComponent<Character>().cSpoken)
                 {
                     gameObject.GetComponent<TMP_Text>().text = "Press 'A' to continue";
-                    //a.GetComponent<SpriteRenderer>().enabled = false;
-                    //b.GetComponent<SpriteRenderer>().enabled = false;
-                    //y.GetComponent<SpriteRenderer>().enabled = false;
-
-
                 }
                 else if (combo.GetComponent<comboCheck>().timeOn)
                 {
                     gameObject.GetComponent<TMP_Text>().text = "";
-                    //a.GetComponent<SpriteRenderer>().enabled = false;
-                    //b.GetComponent<SpriteRenderer>().enabled = false;
-                    //y.GetComponent<SpriteRenderer>().enabled = false;
                 }
                 else if (combo.GetComponent<SpriteRenderer>().sprite != null && checkInv())
                 {
                     gameObject.GetComponent<TMP_Text>().text = "Press 'Y' to return";
-                    //a.GetComponent<SpriteRenderer>().enabled = false;
-                    //b.GetComponent<SpriteRenderer>().enabled = false;
-                    //y.GetComponent<SpriteRenderer>().enabled = true;
 
                 }
                 else
                 {
                     gameObject.GetComponent<TMP_Text>().text = "";
-                    //a.GetComponent<SpriteRenderer>().enabled = false;
-                    //b.GetComponent<SpriteRenderer>().enabled = false;
-                    //y.GetComponent<SpriteRenderer>().enabled = false;
 
                 }
 
                 timer = 0;
 
             }
-
-
-
-
-
-            //if (a.GetComponent<SpriteRenderer>().enabled)
-            //{
-            //    gameObject.GetComponent<TMP_Text>().text = "Select";
-            //}
-            //else if (y.GetComponent<SpriteRenderer>().enabled)
-            //{
-            //    gameObject.GetComponent<TMP_Text>().text = "Reset";
-            //}
-            //else
-            //{
-            //    gameObject.GetComponent<TMP_Text>().text = "";
-            //}
-
 
         }
 

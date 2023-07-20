@@ -8,13 +8,13 @@ public class selector : MonoBehaviour
 
 
     Inventory inv;
-    Controls controls;
+    gamePad controls;
 
     private void Start()
     {
 
         inv = FindAnyObjectByType<Inventory>();
-        controls = FindObjectOfType<Controls>();
+        controls = FindObjectOfType<gamePad>();
     }
 
 
@@ -51,9 +51,9 @@ public class selector : MonoBehaviour
                 }
             }
 
-            if (inv.GetComponent<Controls>().selectedItem != null)
+            if (inv.GetComponent<gamePad>().selectedItem != null)
             {
-                string selected = inv.GetComponent<Controls>().selectedItem;
+                string selected = inv.GetComponent<gamePad>().selectedItem;
 
                 for (int i = 0; i < inv.transform.childCount; i++)
                 {

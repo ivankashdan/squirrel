@@ -34,6 +34,15 @@ public class pVisible : MonoBehaviour
 
     void Update()
     {
+
+
+        if (Input.GetKeyUp(KeyCode.Escape))  //Quit function
+        {
+            Application.Quit();
+        }
+
+
+
         Cursor.visible = false; //hardware cursor invisible
 
         if (isBlocking)

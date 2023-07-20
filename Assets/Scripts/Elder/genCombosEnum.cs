@@ -23,7 +23,7 @@ public class genCombosEnum : MonoBehaviour
 
         comboNames = new ArrayList();
 
-        Object[] combos = Resources.LoadAll("Combos", typeof(Sprite));
+        Object[] combos = Resources.LoadAll("Combos/", typeof(Sprite));
 
         Debug.Log(combos.Length);
 

@@ -3,34 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 
 public class comboCheck : MonoBehaviour
 {
-    private string comboName;
+
     public float timer;
     public bool timeOn;
-    private Controls control;
     public bool testNoTerminal;
 
     GameObject whirl;
     wObjects wO;
     pVisible p;
     Inventory inv;
+    gamePad gPad;
+    Slot slot;
 
-    float timeLength = 0;
+    string comboName;
+    string storedCombo = "";
+
+    public float timeLength = 0;
     public float timeLengthD = 1.25f;
     //int timeLength = 70;
 
-    List<string> combos = new List<string>(); // is it expensive loading these images?    //necessary now we have an enum?????
+    public bool transformTrigger = false;
 
+
+    List<string> combos = new List<string>(); // is it expensive loading these images?    //necessary now we have an enum?????
 
     private void Start()
     {
-        control = FindObjectOfType<Controls>().GetComponent<Controls>();
+        gPad = FindObjectOfType<gamePad>();
         whirl = FindObjectOfType<Character>().gameObject;
         wO = FindObjectOfType<wObjects>();
         p = FindObjectOfType<pVisible>();
         inv = FindObjectOfType<Inventory>();
+        slot = FindObjectOfType<Slot>();
+
+
 
         Sprite[] images = Resources.LoadAll("Combos", typeof(Sprite)).Cast<Sprite>().ToArray();
 
@@ -68,55 +78,46 @@ public class comboCheck : MonoBehaviour
         }
 
 
-        if (!(gameObject.GetComponent<SpriteRenderer>().sprite != null))
+        if (gameObject.GetComponent<SpriteRenderer>().sprite == null)
         {
+            storedCombo = ""; //for drawHostpot()
             return;
         }
 
-        comboName = gameObject.GetComponent<SpriteRenderer>().sprite.name;  
+        //comboName = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+        //storedCombo = comboName;
 
 
-        if (control.getSpecial(comboName) != "") //this is checking repeatedly! Find a way to just do it once   //getSpecial
+        if (gameObject.GetComponent<SpriteRenderer>().sprite.name != storedCombo)
         {
-            newItem(control.getSpecial(comboName), comboName);  //getSpecial
+            comboName = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+
+
+            if (inv.getSpecial(comboName) != "") //this is checking repeatedly! Find a way to just do it once   //getSpecial
+            {
+                transformTrigger = true;
+            }
+            storedCombo = comboName;
+            drawHotspot(gameObject); 
         }
-        
-    }
-
-
-    void checkTime(string i)
-    {
-
-        switch (i)
+       
+        if (transformTrigger)
         {
-            case "fire":
-            case "tent":
-            case "lightning":
-            case "rocket":
-            case "squirrel":
-            case "tree":
-            
-                timeLength = 0;
-                break;
-            default:
-                timeLength = timeLengthD;
-                break;
+            newItem(inv.getSpecial(comboName), comboName);  //getSpecial
         }
 
+
     }
-
-
 
     private void newItem(string special, string recipe)
     {
-        if (control.rumble)
-        {
-            Gamepad.current.SetMotorSpeeds(0.25f, 0.50f);
-        }
-
+        //if (gPad.rumble)
+        //{
+        //    Gamepad.current.SetMotorSpeeds(0.25f, 0.50f);
+        //}
 
         timeOn = true;
-        checkTime(special);
+        inv.checkTime(special);
 
         //this.gameObject.GetComponent<SpriteRenderer>().sprite = null; //fix to enable refresh of items on special change
 
@@ -129,28 +130,22 @@ public class comboCheck : MonoBehaviour
             }
 
 
-            if (timer <= timeLength)
+            if (timer <= timeLength)    //cuts the function short if the timer isn't ready yet
             {
-
-
-                
-
 
                 return;
             }
+
+            
 
             gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load("Combos/" + special, typeof(Sprite)) as Sprite;
             if (gameObject.GetComponent<PolygonCollider2D>()) //replace collider for more accurate hotspot
             {
 
-                //Destroy(gameObject.GetComponent<PolygonCollider2D>());
-                //gameObject.AddComponent<BoxCollider2D>();
-
                 Destroy(gameObject.GetComponent<PolygonCollider2D>());
                 gameObject.AddComponent<PolygonCollider2D>();
-               // gameObject.AddComponent<BoxCollider2D>();
-                //gameObject.GetComponent<BoxCollider2D>().size = new Vector2(gameObject.GetComponent<BoxCollider2D>().size.x / 5,
-                    //gameObject.GetComponent<BoxCollider2D>().size.y / 5);
+
+                
 
             }
 
@@ -168,18 +163,16 @@ public class comboCheck : MonoBehaviour
             timeOn = false;
             timer = 0;
             bool flag1 = false;
-            bool flag2 = false;
+            bool notTerminal = false;
 
 
-            if (testNoTerminal == false)  //if terminal combos are allowed
+            if (testNoTerminal == false)  //if terminal combos are allowed, normal behaviour
             {
                 foreach (string s in combos)
                 {
-                    //Debug.Log(s);
-
-                    if (s.Contains(special + "_") || s.Contains("_" + special))
+                    if (s.Contains(special + "_") || s.Contains("_" + special))  //if more combos exist that are possible, return to hand
                     {
-                        flag2 = true;
+                        notTerminal = true;
                         break;
                     }
 
@@ -188,10 +181,10 @@ public class comboCheck : MonoBehaviour
             }
             else
             {
-                flag2 = true;
+                notTerminal = true;
             }
 
-            if (flag2)
+            if (notTerminal) //return special to hand on pick-up
             {
                 for (int i = 0; i < inv.transform.childCount; ++i)
                 {
@@ -207,7 +200,7 @@ public class comboCheck : MonoBehaviour
                             {
                                 inv.transform.GetChild(i).GetComponent<Slot>().taken = Resources.Load("Combos/" + special, typeof(Sprite)) as Sprite;
                                 //replace taken with the special
-                              
+
                                 //checkSpool(special)
                                 flag1 = true;    //ticks the item off as added
                             }
@@ -218,13 +211,73 @@ public class comboCheck : MonoBehaviour
                 }
             }
 
-            if (control.rumble)
-            {
-                Gamepad.current.SetMotorSpeeds(0, 0);
-            }
-            wO.elderComment();
-        }
-        
+                                    ///WIP STILL DOESN'T WORK ATM!!!!
+            //else //if terminal combo has been reached, iterate through inventory and unspool until there is nothing left to unspool
+            //{
 
+            //    Debug.Log("terminal combo reached");
+            //    bool unspooled = true;
+                
+            //    while (unspooled)
+            //    {
+            //        unspooled = false;
+            //        for (int i = 0; i < inv.transform.childCount; ++i)
+            //        {
+            //            if (inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite)
+            //            {
+            //                if (inv.getRecipe(inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite.name) != "")
+            //                {
+            //                    inv.unSpool(inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite.name);
+            //                    unspooled = true;
+            //                }
+            //            }
+
+                        
+            //            if (inv.getRecipe(inv.transform.GetChild(i).GetComponent<Slot>().taken.name) != "")
+            //            {
+            //                inv.unSpool(inv.transform.GetChild(i).GetComponent<Slot>().taken.name);
+            //                unspooled = true;
+            //            }
+                        
+
+            //        }
+            //    }
+                
+            
+            //}
+
+
+
+            //if (gPad.rumble)
+            //{
+            //    Gamepad.current.SetMotorSpeeds(0, 0);
+            //}
+            wO.elderComment();
+            transformTrigger = false;
+
+        }
+
+        
+    }
+
+    public void drawHotspot(GameObject obj) //WIP /////////Regnerate hotspot using saved file if exists  //there are 2 of these... need just 1
+    {
+
+        bool hsFound = false;
+        if (Resources.Load("Combos/Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name))
+        {
+            obj.GetComponent<SpriteRenderer>().sprite = Resources.Load("Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name, typeof(Sprite)) as Sprite;
+            hsFound = true;
+        }
+        if (obj.GetComponent<PolygonCollider2D>())
+        {
+            Destroy(obj.GetComponent<PolygonCollider2D>());
+            obj.AddComponent<PolygonCollider2D>();
+        }
+
+        if (hsFound)
+        {
+            obj.GetComponent<SpriteRenderer>().sprite = Resources.Load("Combos/" + obj.GetComponent<SpriteRenderer>().sprite.name, typeof(Sprite)) as Sprite;
+        }
     }
 }

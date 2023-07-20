@@ -221,20 +221,20 @@ public class wObjects : MonoBehaviour
                             cRoger.Say("No-one can stay here...");
                         }
                         break;
-                    case combosEnum.stick_sock:
-                        break;
-                    case combosEnum.bbq:
-                        if (c == 0)
-                        {
-                            cRoger.Say("An alternative to meat");
-                        }
-                        break;
-                    case combosEnum.bbq_grass:
-                        if (c == 0)
-                        {
-                            cRoger.Say("Some seasoning...");
-                        }
-                        break;
+                    //case combosEnum.stick_sock:
+                    //    break;
+                    //case combosEnum.bbq:
+                    //    if (c == 0)
+                    //    {
+                    //        cRoger.Say("An alternative to meat");
+                    //    }
+                    //    break;
+                    //case combosEnum.bbq_grass:
+                    //    if (c == 0)
+                    //    {
+                    //        cRoger.Say("Some seasoning...");
+                    //    }
+                    //    break;
                     case combosEnum.birdGF_drum:
                         if (c == 0)
                         {
@@ -295,12 +295,12 @@ public class wObjects : MonoBehaviour
                         }
                         break;
 
-                    case combosEnum.food:
-                        if (c == 0)
-                        {
-                            cRoger.Say("Voila!");
-                        }
-                        break;
+                    //case combosEnum.food:
+                    //    if (c == 0)
+                    //    {
+                    //        cRoger.Say("Voila!");
+                    //    }
+                    //    break;
                     case combosEnum.acorn_grass:
                         break;
                     case combosEnum.grass_ribbon:
