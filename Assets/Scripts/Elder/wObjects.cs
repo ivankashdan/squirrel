@@ -8,16 +8,18 @@ public class wObjects : MonoBehaviour
 
     Character cRoger;
     placeItem combo;
+    objectives objectives;
     combosEnum current; //do I need this eNum? Need to generate currently in order to 
 
     
-    List<string> log = new List<string>();
+    public List<string> log = new List<string>();
 
 
     private void Start()
     {
         combo = FindObjectOfType<placeItem>();
         cRoger = FindObjectOfType<Character>();
+        objectives = FindObjectOfType<objectives>();
     }
 
     int checkLog(string combo)
@@ -44,6 +46,8 @@ public class wObjects : MonoBehaviour
 
             Sprite s = combo.GetComponent<SpriteRenderer>().sprite;
 
+            objectives.checkQuests(s.name);
+
             current = (combosEnum)System.Enum.Parse(typeof(combosEnum), s.name);
 
 
@@ -69,6 +73,7 @@ public class wObjects : MonoBehaviour
 
                             cRoger.SayBackground("A squirrel must have buried it...");
                             cRoger.Wait(1.5f);
+                            objectives.addQuest("Make a squirrel", "squirrel");
 
                         }
                         break;
@@ -85,7 +90,8 @@ public class wObjects : MonoBehaviour
                         if (c == 0)
                         {
 
-                            cRoger.SayBackground("A ribbon... perhaps it belonged to a kite?");
+                            cRoger.SayBackground("A ribbon... perhaps it belonged to a <color=yellow>kite</color>?");
+                            objectives.addQuest("Make a kite", "kite");
 
                         }
                         break;

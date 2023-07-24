@@ -123,6 +123,18 @@ public class Character : MonoBehaviour
 
     }
 
+    public void SayBackground(string dialogue)
+    {
+
+        Debug.Log(dialogue);
+        voice.GetComponent<TMP_Text>().text = dialogue;
+
+        backSwitch = true;
+        backTimer = 0;
+
+
+        //FindObjectOfType<objectives>().addQuest(dialogue);
+    }
 
     public void Say(string dialogue)
     {
@@ -136,6 +148,9 @@ public class Character : MonoBehaviour
 
 
         Speak();
+
+        //FindObjectOfType<objectives>().addQuest(dialogue);
+        
 
     }
 
@@ -153,16 +168,7 @@ public class Character : MonoBehaviour
     }
 
 
-    public void SayBackground(string dialogue)
-    {
-
-        Debug.Log(dialogue);
-        voice.GetComponent<TMP_Text>().text = dialogue;
-
-        backSwitch = true;
-        backTimer = 0;
-    }
-
+    
 
     public void Wait(float i)
     {
