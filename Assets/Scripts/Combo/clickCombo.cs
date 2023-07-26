@@ -12,7 +12,7 @@ public class clickCombo : MonoBehaviour
     pVisible p;
     actionText txt;
     Character whirl;
-    placeItem combo;
+    createCombo combo;
     Inventory inv;
 
     void Start()
@@ -21,14 +21,14 @@ public class clickCombo : MonoBehaviour
         p = FindObjectOfType<pVisible>();
         txt = FindObjectOfType<actionText>();
         whirl = FindObjectOfType<Character>();
-        combo = FindObjectOfType<placeItem>();
+        combo = FindObjectOfType<createCombo>();
         inv = FindObjectOfType<Inventory>();
     }
 
 
     private void OnMouseOver()
     {
-        if (whirl.cSpoken == false && combo.GetComponent<comboCheck>().timeOn == false)
+        if (whirl.cSpoken == false && combo.GetComponent<checkCombo>().timeOn == false)
         {
 
             txt.GetComponent<TMP_Text>().text = "Press 'LMB' to return";
@@ -61,7 +61,7 @@ public class clickCombo : MonoBehaviour
                 {
                     if (whirl.cSpoken == false)
                     {
-                        if (combo.GetComponent<comboCheck>().timeOn == false)
+                        if (combo.GetComponent<checkCombo>().timeOn == false)
                         {
                             inv.reset();
                         }

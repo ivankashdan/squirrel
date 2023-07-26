@@ -6,11 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/1 Whirligig.unity
+    path: Assets/Scenes/whirligig.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
     path: Assets/Scenes/21 Prone.unity
     guid: 6e13db03efe944c47b04a1095f2df66e
   m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 11f1ce48125e26643967f8ac2255da0b,
-      type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: 11f1ce48125e26643967f8ac2255da0b, type: 2}

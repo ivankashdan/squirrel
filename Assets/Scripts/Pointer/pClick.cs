@@ -6,24 +6,24 @@ public class pClick : MonoBehaviour
 {
 
 	Character whirl;
-	placeItem combo;
+	createCombo combo;
 
     private void Start()
     {
 		whirl = FindObjectOfType<Character>();
-		combo = FindObjectOfType<placeItem>();
+		combo = FindObjectOfType<createCombo>();
 	}
 
     private void OnMouseUp()  //skip timers on mouse click
     {
         if (whirl.GetComponent<Character>().cSpoken)
         {
-            combo.GetComponent<comboCheck>().timer = combo.GetComponent<comboCheck>().timeLengthD;
+            combo.GetComponent<checkCombo>().timer = combo.GetComponent<checkCombo>().timeLengthD;
         }
 
-        else if (combo.GetComponent<comboCheck>().timeOn)
+        else if (combo.GetComponent<checkCombo>().timeOn)
         {
-            combo.GetComponent<comboCheck>().timer = combo.GetComponent<comboCheck>().timeLengthD;
+            combo.GetComponent<checkCombo>().timer = combo.GetComponent<checkCombo>().timeLengthD;
         }
     }
 
