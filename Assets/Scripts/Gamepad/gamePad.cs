@@ -116,21 +116,29 @@ public class gamePad : MonoBehaviour
            // Cursor.visible = false;
 
             p.GetComponent<SpriteRenderer>().enabled = false;
-            if (gameObject.transform.GetChild(slotNumber).GetComponent<SpriteRenderer>().sprite != null)
+           
+            if (gameObject.transform.GetChild(slotNumber))
             {
-                selectedItem = gameObject.transform.GetChild(slotNumber).GetComponent<SpriteRenderer>().sprite.name;
-            }
-            else
-            {
-                if (slotNumber == 0)
-                    leftRight = true;
-                if (slotNumber == inv.transform.childCount - 2)
-                    leftRight = false;
-                if (leftRight)
-                    Right();
+
+                if (gameObject.transform.GetChild(slotNumber).GetComponent<SpriteRenderer>().sprite != null)
+                {
+                    selectedItem = gameObject.transform.GetChild(slotNumber).GetComponent<SpriteRenderer>().sprite.name;
+                }
                 else
-                    Left();
+                {
+                    if (slotNumber == 0)
+                        leftRight = true;
+                    if (slotNumber == inv.transform.childCount-1)
+                        leftRight = false;
+                    if (leftRight)
+                        Right();
+                    else
+                        Left();
+                }
+
             }
+
+           
             if (whirl.GetComponent<Character>().cSpoken)
             {
                 if (current.aButton.wasPressedThisFrame || current.yButton.wasPressedThisFrame || current.bButton.wasPressedThisFrame)

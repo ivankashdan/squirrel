@@ -26,7 +26,7 @@ public class inactiveRestart : MonoBehaviour
 
             if (rTimer > rTimeLimit)
             {
-                SceneManager.LoadScene("1 Whirligig", LoadSceneMode.Single);
+                SceneManager.LoadScene("whirligig", LoadSceneMode.Single);
             }
 
             if (current != null)

@@ -112,43 +112,55 @@ public class Inventory : MonoBehaviour
             string recipe = getRecipe(selectedItem);
             char[] chArray = new char[1] { char.Parse("_") };
 
+            bool specialFound = false;
 
-            foreach (string str in recipe.Split(chArray))
+            for (int i = 0; i < inv.transform.childCount; ++i)
             {
-                for (int i = 0; i < inv.transform.childCount; ++i)
+
+                if (inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite != null
+                    && inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite.name == selectedItem)
                 {
-                    bool specialFound = false;
+                    inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = null; //delete special from inv
+                    specialFound = true;
+                    break;
+                    
 
-                    if (inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite != null
-                        && inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite.name == selectedItem)
-                    {
-                        inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = null; //delete special from inv
-                        specialFound = true;
-
-                    }
-                    if (inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite == null) //replace empties in inv with ingredients
-                    {
-
-                        inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = "Behind";  //HIDE new item for resize
-
-                        Sprite sprite = Resources.Load("Combos/" + str, typeof(Sprite)) as Sprite;
-                        inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = sprite;
-
-                        if (specialFound) //updated selectedItem
-                        {
-                            firstPart = sprite.name;
-                            specialFound = false;
-                        }
-
-                        Destroy(inv.transform.GetChild(i).GetComponent<PolygonCollider2D>());   //reset collider for special item in inventory (maybe replace with reset function)
-                        inv.transform.GetChild(i).gameObject.AddComponent<PolygonCollider2D>();
-                       
-
-                        break;
-                    }
                 }
             }
-            selectedItem = null;
+
+            if (specialFound)
+            {
+
+                foreach (string str in recipe.Split(chArray))
+                {
+
+                    for (int i = 0; i < inv.transform.childCount; ++i)
+                    {
+                        if (inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite == null) //replace empties in inv with ingredients
+                        {
+
+                            inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = "Behind";  //HIDE new item for resize
+
+                            Sprite sprite = Resources.Load("Combos/" + str, typeof(Sprite)) as Sprite;
+                            inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = sprite;
+
+                          
+                            Destroy(inv.transform.GetChild(i).GetComponent<PolygonCollider2D>());   //reset collider for special item in inventory (maybe replace with reset function)
+                            inv.transform.GetChild(i).gameObject.AddComponent<PolygonCollider2D>();
+
+                            break;
+                        }
+
+                    }
+
+
+
+
+
+                }
+
+            }
+
         }
 
         if (!gPad.controller) //reset actionText on unspool for pointer

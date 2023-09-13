@@ -26,13 +26,11 @@ public class recipeBook : MonoBehaviour
         {combosEnum.acorn_catkin, combosEnum.squirrel},
         {combosEnum.grass_squirrel, combosEnum.tree},
         {combosEnum.feather_sock_tree, combosEnum.baby},
-        {combosEnum.birdGF_stick, combosEnum.nest},
-        {combosEnum.birdBS_stick, combosEnum.nest},
-        {combosEnum.birdGF_nest, combosEnum.chicks},
-        {combosEnum.birdBS_nest, combosEnum.chicks},
-        {combosEnum.bottle_tree, combosEnum.earth}
-
-        //bird nest
+        //{combosEnum.birdGF_stick, combosEnum.nest},
+       // {combosEnum.birdBS_stick, combosEnum.nest},
+       // {combosEnum.birdGF_nest, combosEnum.chicks},
+       // {combosEnum.birdBS_nest, combosEnum.chicks},
+       // {combosEnum.bottle_tree, combosEnum.earth}
 
     };
 }

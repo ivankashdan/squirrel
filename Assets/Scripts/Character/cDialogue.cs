@@ -89,8 +89,8 @@ public class cDialogue : MonoBehaviour
                     case combosEnum.ribbon:
                         if (c == 0)
                         {
-
-                            cRoger.SayBackground("A ribbon... perhaps it belonged to a <color=yellow>kite</color>?");
+                            cRoger.SayBackground("A ribbon... perhaps it belonged to a kite?");
+                            //cRoger.SayBackground("A ribbon... perhaps it belonged to a <color=yellow>kite</color>?");
                             objectives.addQuest("Make a kite", "kite");
 
                         }
