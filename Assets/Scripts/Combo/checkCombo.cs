@@ -262,9 +262,10 @@ public class checkCombo : MonoBehaviour
 
     public void drawHotspot(GameObject obj) //WIP /////////Regnerate hotspot using saved file if exists  //there are 2 of these... need just 1
     {
+        
 
         bool hsFound = false;
-        if (Resources.Load("Combos/Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name))
+        if (Resources.Load("Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name))
         {
             obj.GetComponent<SpriteRenderer>().sprite = Resources.Load("Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name, typeof(Sprite)) as Sprite;
             hsFound = true;

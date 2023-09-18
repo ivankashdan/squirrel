@@ -21,6 +21,7 @@ public class actionText : MonoBehaviour
 
     private void Start()
     {
+        GetComponent<TMP_Text>().text = "";
 
         select = FindObjectOfType<selector>().gameObject;
         whirl = FindObjectOfType<Character>().gameObject;

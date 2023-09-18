@@ -1317,7 +1317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rTimeLimit: 50
-  resetOn: 1
+  resetOn: 0
 --- !u!1 &800833690
 GameObject:
   m_ObjectHideFlags: 0

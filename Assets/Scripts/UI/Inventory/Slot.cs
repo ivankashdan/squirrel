@@ -210,7 +210,7 @@ public class Slot : MonoBehaviour
     {
 
         bool hsFound = false;
-        if (Resources.Load("Combos/Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name))
+        if (Resources.Load("Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name))
         {
             obj.GetComponent<SpriteRenderer>().sprite = Resources.Load("Hotspots/" + obj.GetComponent<SpriteRenderer>().sprite.name, typeof(Sprite)) as Sprite;
             hsFound = true;
