@@ -87,7 +87,7 @@ public class actionText : MonoBehaviour
 
                         if (inv.GetComponent<Inventory>().getRecipe(gPad.GetComponent<gamePad>().selectedItem) != "")
                         {
-                            Debug.Log("Unspool detected");
+                            //Debug.Log("Unspool detected");
 
                             gameObject.GetComponent<TMP_Text>().text = "Press 'B' to unspool / 'A' to select";
                         }

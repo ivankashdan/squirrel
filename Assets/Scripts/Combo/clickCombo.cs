@@ -23,32 +23,40 @@ public class clickCombo : MonoBehaviour
         whirl = FindObjectOfType<Character>();
         combo = FindObjectOfType<createCombo>();
         inv = FindObjectOfType<Inventory>();
+        
     }
 
 
     private void OnMouseOver()
     {
-        if (whirl.cSpoken == false && combo.GetComponent<checkCombo>().timeOn == false)
+        if (controls.controller == false)
         {
+            if (whirl.cSpoken == false && combo.GetComponent<checkCombo>().timeOn == false)
+            {
 
-            txt.GetComponent<TMP_Text>().text = "Press 'LMB' to return";
+                txt.GetComponent<TMP_Text>().text = "Press 'LMB' to return";
+            }
+
+            // Debug.Log("entered");
+
+            hover = true;
         }
-
-        // Debug.Log("entered");
-
-        hover = true;
     }
 
 
     void OnMouseExit()
     {
-        //Debug.Log("exited");
-        hover = false;
-
-        if (!whirl.cSpoken)
+        if (controls.controller == false)
         {
-            txt.GetComponent<TMP_Text>().text = "";
+            //Debug.Log("exited");
+            hover = false;
+
+            if (!whirl.cSpoken)
+            {
+                txt.GetComponent<TMP_Text>().text = "";
+            }
         }
+
     }
 
     private void OnMouseDown()
