@@ -7,7 +7,7 @@ public class recipeBook : MonoBehaviour
     public Dictionary<combosEnum, combosEnum> recipe = new Dictionary<combosEnum, combosEnum>()
     {
         {combosEnum.sock_stick, combosEnum.tent},
-        {combosEnum.bottle_sock, combosEnum.birdBS},
+        //{combosEnum.bottle_sock, combosEnum.birdBS},
         {combosEnum.feather_grass, combosEnum.birdGF},
         {combosEnum.ribbon_stick, combosEnum.catkin},
         {combosEnum.bottle_rock, combosEnum.drum},
@@ -23,14 +23,12 @@ public class recipeBook : MonoBehaviour
         {combosEnum.kite_plutonium, combosEnum.rocket},
         {combosEnum.grass_rock_stick, combosEnum.snail},
         {combosEnum.drum_stick, combosEnum.lightning},
-        {combosEnum.acorn_catkin, combosEnum.squirrel},
-        {combosEnum.grass_squirrel, combosEnum.tree},
+        {combosEnum.acorn_grass, combosEnum.squirrel},
+        {combosEnum.squirrel_stick, combosEnum.tree},
         {combosEnum.feather_sock_tree, combosEnum.baby},
         //{combosEnum.birdGF_stick, combosEnum.nest},
-       // {combosEnum.birdBS_stick, combosEnum.nest},
-       // {combosEnum.birdGF_nest, combosEnum.chicks},
-       // {combosEnum.birdBS_nest, combosEnum.chicks},
-       // {combosEnum.bottle_tree, combosEnum.earth}
+        //{combosEnum.birdGF_sock_stick, combosEnum.chicks},
+        {combosEnum.bottle_tree, combosEnum.earth}
 
     };
 }

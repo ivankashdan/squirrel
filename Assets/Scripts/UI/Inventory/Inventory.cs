@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
             case combosEnum.tent:
             case combosEnum.lightning:
             case combosEnum.rocket:
-            case combosEnum.squirrel:
+            //case combosEnum.squirrel:
             case combosEnum.tree:
                 check.timeLength = 0;
                 break;

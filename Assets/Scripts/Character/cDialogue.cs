@@ -179,12 +179,7 @@ public class cDialogue : MonoBehaviour
                             cRoger.Say("Ah...");
                         }
                         break;
-                    case combosEnum.birdBS:
-                        if (c == 0)
-                        {
-                            cRoger.Say("One of the birds has landed");
-                        }
-                        break;
+             
                     case combosEnum.feather_ribbon:
                         if (c == 0)
                         {
@@ -247,14 +242,6 @@ public class cDialogue : MonoBehaviour
                             cRoger.Say("It flew away...");
                         }
                         break;
-                    case combosEnum.birdBS_fire:
-                        if (c == 0)
-                        {
-                            cRoger.Say("How could you?");
-                            cRoger.Say("");
-                            cRoger.Say("Good for a cold, however");
-                        }
-                        break;
                     case combosEnum.birdGF_fire:
                         if (c == 0)
                         {
@@ -308,7 +295,11 @@ public class cDialogue : MonoBehaviour
                     //    }
                     //    break;
                     case combosEnum.acorn_grass:
-                        break;
+                        if (c == 0)
+                        {
+                            cRoger.Say("Here it comes...");
+                        }
+                            break;
                     case combosEnum.grass_ribbon:
                         break;
                     case combosEnum.drum_stick:
@@ -419,15 +410,13 @@ public class cDialogue : MonoBehaviour
                             cRoger.Say("It can grow no further");
                         }
                         break;
-                    case combosEnum.acorn_catkin:
-                        break;
                     case combosEnum.squirrel:
                         if (c == 0)
                         {
                             cRoger.Say("Fruit and nuts will support a population");
                         }
                         break;
-                    case combosEnum.grass_squirrel:
+                    case combosEnum.squirrel_stick:
                         break;
                     case combosEnum.tree:
                         if (c == 0)
