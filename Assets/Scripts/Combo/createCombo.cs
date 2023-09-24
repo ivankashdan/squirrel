@@ -11,7 +11,7 @@ public class createCombo : MonoBehaviour
     pVisible p;
     actionText text;
     hideItems check;
-
+    Inventory inv;
 
 
     private void Start()
@@ -19,6 +19,7 @@ public class createCombo : MonoBehaviour
         p = FindObjectOfType<pVisible>();
         text = FindObjectOfType<actionText>();
         check = FindObjectOfType<hideItems>();
+        inv = FindObjectOfType<Inventory>();
 
 
     }
@@ -33,10 +34,15 @@ public class createCombo : MonoBehaviour
         else // combine items
         {
             string existing = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+            string comboName = check.newComboName(item, existing);
 
-            if (Resources.Load("Combos/" + check.newComboName(item, existing)))
+            if (Resources.Load("Combos/" + comboName))
             {
-                gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load("Combos/" + check.newComboName(item, existing), typeof(Sprite)) as Sprite;
+                gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load("Combos/" + comboName, typeof(Sprite)) as Sprite;
+            }
+            else if (Resources.Load("Combos/" + inv.getSpecial(comboName)))  //check recipes for instant combo
+            {
+                gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load("Combos/" + inv.getSpecial(comboName), typeof(Sprite)) as Sprite;
             }
 
             Destroy(GetComponent<PolygonCollider2D>());

@@ -176,7 +176,7 @@ public class cDialogue : MonoBehaviour
                     case combosEnum.bottle_sock:
                         if (c == 0)
                         {
-                            cRoger.Say("Ah...");
+                            //cRoger.Say("Ah...");
                         }
                         break;
              
@@ -204,8 +204,6 @@ public class cDialogue : MonoBehaviour
                         {
                             cRoger.Say("It must have come from the power plant");
                         }
-                        break;
-                    case combosEnum.sock_stick:
                         break;
                     case combosEnum.tent:
                         if (c == 0)
@@ -272,8 +270,6 @@ public class cDialogue : MonoBehaviour
                         break;
                     case combosEnum.acorn_feather:
                         break;
-                    case combosEnum.rock_stick:
-                        break;
                     case combosEnum.fire:
                         if (c == 0)
                         {
@@ -297,12 +293,11 @@ public class cDialogue : MonoBehaviour
                     case combosEnum.acorn_grass:
                         if (c == 0)
                         {
-                            cRoger.Say("Here it comes...");
+                            cRoger.Say("Fruit and nuts will support a population");
+                            //cRoger.Say("Here it comes...");
                         }
                             break;
                     case combosEnum.grass_ribbon:
-                        break;
-                    case combosEnum.drum_stick:
                         break;
                     case combosEnum.lightning:
                         if (c == 0)
@@ -324,8 +319,6 @@ public class cDialogue : MonoBehaviour
                     case combosEnum.acorn_rock:
                         break;
                     case combosEnum.feather_rock:
-                        break;
-                    case combosEnum.kite_plutonium:
                         break;
                     case combosEnum.rocket:
                         if (c == 0)
@@ -413,10 +406,8 @@ public class cDialogue : MonoBehaviour
                     case combosEnum.squirrel:
                         if (c == 0)
                         {
-                            cRoger.Say("Fruit and nuts will support a population");
+                            //cRoger.Say("Fruit and nuts will support a population");
                         }
-                        break;
-                    case combosEnum.squirrel_stick:
                         break;
                     case combosEnum.tree:
                         if (c == 0)

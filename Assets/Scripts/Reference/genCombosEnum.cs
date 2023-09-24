@@ -17,9 +17,11 @@ public class genCombosEnum : MonoBehaviour
         Character cRoger;
         createCombo combo;
         ArrayList comboNames;
+        recipeBook recipe;
 
         cRoger = FindObjectOfType<Character>();
         combo = FindObjectOfType<createCombo>();
+        recipe = FindObjectOfType<recipeBook>();
 
         comboNames = new ArrayList();
 
@@ -33,7 +35,10 @@ public class genCombosEnum : MonoBehaviour
             comboNames.Add(c.name);
         }
 
-        
+        foreach (string s in recipe.instant) //add instant strings
+        {
+            comboNames.Add(s);
+        }
 
         comboNames.Sort();
 

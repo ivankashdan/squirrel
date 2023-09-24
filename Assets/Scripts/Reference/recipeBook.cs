@@ -1,34 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static combosEnum;
 
 public class recipeBook : MonoBehaviour
 {
+
+    public string[] instant = new string[]
+    {
+        "sock_stick",
+        "rock_stick",
+        "kite_plutonium",
+        "drum_stick",
+        "squirrel_stick"
+    };
+
+
     public Dictionary<combosEnum, combosEnum> recipe = new Dictionary<combosEnum, combosEnum>()
     {
-        {combosEnum.sock_stick, combosEnum.tent},
-        //{combosEnum.bottle_sock, combosEnum.birdBS},
-        {combosEnum.feather_grass, combosEnum.birdGF},
-        {combosEnum.ribbon_stick, combosEnum.catkin},
-        {combosEnum.bottle_rock, combosEnum.drum},
-        {combosEnum.rock_stick, combosEnum.fire},
-        {combosEnum.bottle_catkin, combosEnum.flowerpot},
-        {combosEnum.grass_sock, combosEnum.pillow},
-        {combosEnum.bottle_grass, combosEnum.plutonium},
-        {combosEnum.rock_sock, combosEnum.stocking},
-        {combosEnum.pillow_ribbon, combosEnum.sushi},
-        {combosEnum.acorn_bottle, combosEnum.teapot},
-        {combosEnum.fire_teapot, combosEnum.tea},
-        {combosEnum.feather_ribbon, combosEnum.kite},
-        {combosEnum.kite_plutonium, combosEnum.rocket},
-        {combosEnum.grass_rock_stick, combosEnum.snail},
-        {combosEnum.drum_stick, combosEnum.lightning},
-        {combosEnum.acorn_grass, combosEnum.squirrel},
-        {combosEnum.squirrel_stick, combosEnum.tree},
-        {combosEnum.feather_sock_tree, combosEnum.baby},
-        //{combosEnum.birdGF_stick, combosEnum.nest},
-        //{combosEnum.birdGF_sock_stick, combosEnum.chicks},
-        {combosEnum.bottle_tree, combosEnum.earth}
+        {sock_stick, tent},
+        {feather_grass, birdGF},
+        {ribbon_stick, catkin},
+        {bottle_rock, drum},
+        {rock_stick, fire},
+        {bottle_catkin, flowerpot},
+        {grass_sock, pillow},
+        {bottle_grass, plutonium},
+        {rock_sock, stocking},
+        {pillow_ribbon, sushi},
+        {acorn_bottle, teapot},
+        {fire_teapot, tea},
+        {feather_ribbon, kite},
+        {kite_plutonium, rocket},
+        {grass_rock_stick, snail},
+        {drum_stick, lightning},
+        {acorn_grass, squirrel},
+        {squirrel_stick, tree},
+        {feather_sock_tree, baby},
+        {bottle_tree, earth}
 
     };
 }

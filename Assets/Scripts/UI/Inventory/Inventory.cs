@@ -15,28 +15,7 @@ public class Inventory : MonoBehaviour
     gamePad gPad;
     checkCombo check;
     recipeBook rb;
-
-    public void checkTime(string i)
-    {
-
-        combosEnum cEnum = (combosEnum)System.Enum.Parse(typeof(combosEnum), i);
-
-        switch (cEnum)
-        {
-            case combosEnum.fire:
-            case combosEnum.tent:
-            case combosEnum.lightning:
-            case combosEnum.rocket:
-            //case combosEnum.squirrel:
-            case combosEnum.tree:
-                check.timeLength = 0;
-                break;
-            default:
-                check.timeLength = check.timeLengthD;
-                break;
-        }
-
-    }
+    Slot slot;
 
     private void Start()
     {
@@ -44,6 +23,7 @@ public class Inventory : MonoBehaviour
         gPad = FindObjectOfType<gamePad>();
         check = FindObjectOfType<checkCombo>();
         rb = FindObjectOfType<recipeBook>();
+        slot = FindObjectOfType<Slot>();
 
 
         for (int i = 0; i < storedItem.Length; i++) //populate Inv with Starting Objects
@@ -79,18 +59,17 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < transform.childCount; ++i)
         {
             GameObject invItem = transform.GetChild(i).gameObject;
-            if (invItem.GetComponent<SpriteRenderer>().sprite == null && invItem.GetComponent<Slot>().taken != null)
+            if (invItem.GetComponent<SpriteRenderer>().sprite == null && invItem.GetComponent<Slot>().taken != null) // if empty, and taken is not empty
             {
 
                 invItem.GetComponent<SpriteRenderer>().sortingLayerName = "Behind"; //HIDE new item for resize
 
 
-                invItem.GetComponent<SpriteRenderer>().sprite = invItem.GetComponent<Slot>().taken;
-                invItem.GetComponent<Slot>().taken = null;
+                invItem.GetComponent<SpriteRenderer>().sprite = invItem.GetComponent<Slot>().taken; //turn taken into held
+                invItem.GetComponent<Slot>().taken = null;  //remove taken
 
-                Destroy(invItem.GetComponent<PolygonCollider2D>());   //reset collider for special item in inventory
+                Destroy(invItem.GetComponent<PolygonCollider2D>());   //reset collider for slot
                 invItem.AddComponent<PolygonCollider2D>();
-
 
             }
         }
@@ -114,17 +93,16 @@ public class Inventory : MonoBehaviour
 
             bool specialFound = false;
 
-            for (int i = 0; i < inv.transform.childCount; ++i)
+            for (int i = 0; i < inv.transform.childCount; ++i) //find Special
             {
 
                 if (inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite != null
                     && inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite.name == selectedItem)
                 {
                     inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = null; //delete special from inv
+                    
                     specialFound = true;
                     break;
-                    
-
                 }
             }
 
@@ -139,14 +117,14 @@ public class Inventory : MonoBehaviour
                         if (inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite == null) //replace empties in inv with ingredients
                         {
 
-                            inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = "Behind";  //HIDE new item for resize
+                            //inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sortingLayerName = "Behind";  //HIDE new item for resize
+                            //reset();
 
                             Sprite sprite = Resources.Load("Combos/" + str, typeof(Sprite)) as Sprite;
                             inv.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = sprite;
-
-                          
-                            Destroy(inv.transform.GetChild(i).GetComponent<PolygonCollider2D>());   //reset collider for special item in inventory (maybe replace with reset function)
-                            inv.transform.GetChild(i).gameObject.AddComponent<PolygonCollider2D>();
+                            reset();
+                            //Destroy(inv.transform.GetChild(i).GetComponent<PolygonCollider2D>());   //reset collider for special item in inventory (maybe replace with reset function)
+                            //inv.transform.GetChild(i).gameObject.AddComponent<PolygonCollider2D>();
 
                             break;
                         }
@@ -217,20 +195,25 @@ public class Inventory : MonoBehaviour
 
         if (key != "")
         {
-            combosEnum k = (combosEnum)System.Enum.Parse(typeof(combosEnum), key);  //must be enum = i turned into an enum
-
-            if (rb.recipe.ContainsKey(k))
+            if (System.Enum.TryParse<combosEnum>(key, out _))
             {
-                foreach (var r in rb.recipe)
-                {
-                    if (r.Key == k)
-                    {
-                        //Debug.Log(r.Value.ToString());
-                        return r.Value.ToString();
-                    }
-                }
+                combosEnum k = (combosEnum)System.Enum.Parse(typeof(combosEnum), key);  //must be enum = i turned into an enum
 
+                if (rb.recipe.ContainsKey(k))
+                {
+                    foreach (var r in rb.recipe)
+                    {
+                        if (r.Key == k)
+                        {
+                            //Debug.Log(r.Value.ToString());
+                            return r.Value.ToString();
+                        }
+                    }
+
+                }
             }
+
+       
 
         }
         return "";

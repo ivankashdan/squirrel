@@ -1033,7 +1033,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: 0
   timeOn: 0
-  testNoTerminal: 0
   timeLength: 0
   timeLengthD: 1.25
   transformTrigger: 0
@@ -1197,6 +1196,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2d6f3b00f3ed434eb1eaa5567bbd65d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  instant:
+  - sock_stick
+  - rock_stick
+  - kite_plutonium
+  - drum_stick
+  - squirrel_stick
 --- !u!1 &768620531
 GameObject:
   m_ObjectHideFlags: 0

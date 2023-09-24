@@ -35,58 +35,32 @@ public class Slot : MonoBehaviour
 
     
 
+    
+
     private void FixedUpdate()
     {
         if (gameObject.GetComponent<SpriteRenderer>().sprite != null)
         {
+
             if (gameObject.GetComponent<SpriteRenderer>().sprite.name != currentSprite)
             {
                 changed = true;
-            }
 
+            }
             if (changed)
             {
-
-               
-                
-
-                float sizeLimit = 0.4f;
-                float itemSizeX = gameObject.GetComponent<PolygonCollider2D>().bounds.size.x;
-                float itemSizeY = gameObject.GetComponent<PolygonCollider2D>().bounds.size.y;
-
-                if (itemSizeX > sizeLimit || itemSizeY > sizeLimit)     
-                {
-                    while (itemSizeX > sizeLimit || itemSizeY > sizeLimit)
-                    {
-                        gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.01f, gameObject.transform.localScale.y - 0.01f, 0);
-
-                        itemSizeX *= 0.99f;
-                        itemSizeY *= 0.99f;
-
-                    }
-                    Debug.Log("new item size = " + itemSizeX + " and " + itemSizeY);
-
-
-
-
-                }
-                else
-                {
-                    transform.localScale = new Vector3(1, 1, 1);  //need this for unspool
-                }
-
-
-                currentSprite = gameObject.GetComponent<SpriteRenderer>().sprite.name;
-
-
+                resizeItem();
 
                 changed = false;
                 drawHotspot(gameObject);
 
             }
 
-            if (gameObject.GetComponent<SpriteRenderer>().sortingLayerName == "Behind")
-                gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "UI"; //if item is hidden for resize, reveal
+
+           
+
+          
+
 
         }
         else
@@ -95,7 +69,35 @@ public class Slot : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
         }
 
-        
+    }
+
+    public void resizeItem()
+    {
+        float sizeLimit = 0.4f;
+        float itemSizeX = gameObject.GetComponent<PolygonCollider2D>().bounds.size.x;
+        float itemSizeY = gameObject.GetComponent<PolygonCollider2D>().bounds.size.y;
+
+        if (itemSizeX > sizeLimit || itemSizeY > sizeLimit)
+        {
+            while (itemSizeX > sizeLimit || itemSizeY > sizeLimit)
+            {
+                gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.01f, gameObject.transform.localScale.y - 0.01f, 0);
+
+                itemSizeX *= 0.99f;
+                itemSizeY *= 0.99f;
+
+            }
+            //Debug.Log("new item size = " + itemSizeX + " and " + itemSizeY);
+
+        }
+        else
+            transform.localScale = new Vector3(1, 1, 1);  //need this for unspool
+
+        if (gameObject.GetComponent<SpriteRenderer>().sortingLayerName == "Behind")
+            gameObject.GetComponent<SpriteRenderer>().sortingLayerName = "UI"; //if item is hidden for resize, reveal
+
+        currentSprite = gameObject.GetComponent<SpriteRenderer>().sprite.name;
+
 
     }
 
