@@ -10,9 +10,8 @@ public class Recipe : MonoBehaviour
        
         {"sock_stick", "tent"},
         {"feather_grass", "birdGF"},
-
-        //{ribbon_stick, catkin},
-        //{bottle_rock, drum},
+        {"ribbon_stick", "catkin"},
+        {"bottle_rock", "drum" }
         //{rock_stick, fire},
         //{bottle_catkin, flowerpot},
         //{grass_sock, pillow},
@@ -33,6 +32,39 @@ public class Recipe : MonoBehaviour
     };
 
 
-    
+    public string GetSpecial(string key)
+    {
+
+
+        if (recipe.ContainsKey(key))
+        {
+            foreach (var r in recipe)
+            {
+                if (r.Key == key)
+                {
+                    return r.Value;
+                }
+            }
+
+        }
+        return "";
+    }
+
+    public string GetRecipe(string value)
+    {
+
+        if (recipe.ContainsValue(value))
+        {
+            foreach (var r in recipe)
+            {
+                if (r.Value == value)
+                {
+                    return r.Key.ToString();
+                }
+            }
+
+        }
+        return "";
+    }
 
 }

@@ -5,13 +5,15 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
 
-    List<Item> ingredients;
-    int stage;
+    //List<Item> ingredients;
+    //int stage;
+    const float posDefault = 0f;
+    const float scaleUp = 0.076f;
 
     private void Awake()
     {
-        transform.localPosition = new Vector3(0, 0, 0);
-        transform.localScale = new Vector3(0.076f, 0.076f, 0.076f);
+        transform.localPosition = new Vector3(posDefault, posDefault, posDefault);
+        transform.localScale = new Vector3(scaleUp, scaleUp, scaleUp);
 
         SpriteRenderer sprite = gameObject.AddComponent<SpriteRenderer>();  
 
@@ -27,6 +29,9 @@ public class Item : MonoBehaviour
             if (!gameObject.GetComponent<PolygonCollider2D>()) //add collider if no hotspot
                 gameObject.AddComponent<PolygonCollider2D>();
         }
+
+        Inventory inv = FindObjectOfType<Inventory>();
+        inv.StartCoroutine(inv.HideItems()); //refresh inventory, because an item was changed
 
     }
 
