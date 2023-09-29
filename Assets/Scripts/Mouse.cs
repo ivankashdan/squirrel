@@ -7,6 +7,8 @@ public class Mouse : MonoBehaviour
 
     public bool mouseActive = true; //currently not changed by anything
 
+    public bool clickContinue = false;
+
     private void Start()
     {
         Cursor.visible = false; //turn off hardware mouse
@@ -22,14 +24,51 @@ public class Mouse : MonoBehaviour
         transform.position = mousePosition;
     }
 
-    private void Update()
+
+    public void clickContinueOn()
     {
-        if (mouseActive)       
-            FollowMouse();
+        clickContinue = true;
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+
+        GameObject[] slots = GameObject.FindGameObjectsWithTag("Slot");
+        foreach (var slot in slots)
+        {
+            slot.SetActive(false);
+
+        }
+
+    }
+
+    public void clickContinueOff()
+    {
+        clickContinue = false;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+        GameObject[] slots = GameObject.FindGameObjectsWithTag("Slot");
+        foreach (var slot in slots)
+        {
+            slot.SetActive(true);
+
+        }
 
     }
 
 
+    private void Update()
+    {
+        if (mouseActive && !clickContinue)       
+            FollowMouse();
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (clickContinue)
+            {
+                FindObjectOfType<Character>().clickThroughDialogue();
+            }
+        }
+    }
+
+   
 
 
 

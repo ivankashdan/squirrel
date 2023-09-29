@@ -4,14 +4,8 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    float pWidth = 0;
-    const float slotWidth = 0.288f;
-    const float posDefault = 0;
-    const float scaleDefault = 1;
-
     bool refreshing = false;
-
-
+    float pWidth = 0;
 
     public List<string> storedItem = new List<string>()
     {
@@ -20,27 +14,33 @@ public class Inventory : MonoBehaviour
     }; //editable in Unity
 
 
-    GameObject AddSlot()
+    GameObject AddSlot(float positionX, float slotWidth)
     {
         GameObject newSlot = new GameObject("Slot");
+        newSlot.tag = "Slot";
         newSlot.transform.parent = gameObject.transform;
-        newSlot.transform.localPosition = new Vector3(pWidth, posDefault, posDefault);
-        newSlot.transform.localScale = new Vector3(scaleDefault, scaleDefault, scaleDefault); ;
+
+        const float defaultPositionY = 0;
+        const float defaultPositionZ = 0;
+        newSlot.transform.localPosition = new Vector3(positionX, defaultPositionY, defaultPositionZ);
+
+        newSlot.transform.localScale = Vector3.one;
+
         pWidth += slotWidth;
         newSlot.AddComponent<Slot>();
+
         return newSlot;
     }
 
     void PopulateInv(List<string> storedItem)
     {
-        Actions actions = FindObjectOfType<Actions>();
-
         foreach (string item in storedItem) //populate Inv with Starting Objects
         {
-            GameObject newSlot = AddSlot();
+            GameObject newSlot = AddSlot(pWidth, 0.288f);
+
+            Actions actions = FindObjectOfType<Actions>();
             actions.AddItem(item, newSlot.transform);
         }
-
     }
 
     void Start()

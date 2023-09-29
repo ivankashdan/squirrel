@@ -14,6 +14,25 @@ public class Actions : MonoBehaviour
 
     }
 
+    IEnumerator DelayTransform(string special)
+    {
+
+        yield return new WaitForSeconds(0.1f);
+
+        Character character = FindObjectOfType<Character>();
+        while (character.toDo.Count > 0)
+        {
+            yield return null;
+        }
+
+        Combo combo = FindObjectOfType<Combo>();
+        GameObject existing = combo.transform.GetChild(0).gameObject; 
+        Destroy(existing);
+
+        Recipe rb = FindObjectOfType<Recipe>();
+        AddItem(special, combo.transform);
+    }
+
     public void SelectItem(GameObject item)
     {
 
@@ -39,9 +58,19 @@ public class Actions : MonoBehaviour
             {
                 AddItem(comboName, combo.transform);
 
-                if (rb.GetSpecial(comboName)!="") //transform into special if it exist
+                string special = rb.GetSpecial(comboName);
+
+                if (special!="") //transform into special if it exist
                 {
-                    StartCoroutine(SlowTransform(comboName));
+                    if (FindObjectOfType<cDialogue>().checkLog(special) == -1)
+                    {
+                        StartCoroutine(DelayTransform(special));
+                    }
+                    else
+                    {
+                        //StartCoroutine(DelayTransform(special));
+                        StartCoroutine(SlowTransform(comboName));
+                    }
                 }
 
             }

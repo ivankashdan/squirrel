@@ -11,30 +11,28 @@ public class Recipe : MonoBehaviour
         {"sock_stick", "tent"},
         {"feather_grass", "birdGF"},
         {"ribbon_stick", "catkin"},
-        {"bottle_rock", "drum" }
-        //{rock_stick, fire},
-        //{bottle_catkin, flowerpot},
-        //{grass_sock, pillow},
-        //{bottle_grass, plutonium},
-        //{rock_sock, stocking},
-        //{pillow_ribbon, sushi},
-        //{acorn_bottle, teapot},
-        //{fire_teapot, tea},
-        //{feather_ribbon, kite},
-        //{kite_plutonium, rocket},
-        //{grass_rock_stick, snail},
-        //{drum_stick, lightning},
-        //{acorn_grass, squirrel},
-        //{squirrel_stick, tree},
-        //{feather_sock_tree, baby},
-        //{bottle_tree, earth}
-
+        {"bottle_rock", "drum"},
+        {"rock_stick", "fire"},
+        {"bottle_catkin", "flowerpot"},
+        {"grass_sock","pillow"},
+        {"bottle_grass", "plutonium"},
+        {"rock_sock", "stocking" },
+        {"pillow_ribbon", "sushi"},
+        {"acorn_bottle", "teapot"},
+        {"fire_teapot", "tea"},
+        {"feather_ribbon", "kite"},
+        {"kite_plutonium", "rocket" },
+        {"grass_rock_stick", "snail" },
+        {"drum_stick", "lightning"},
+        {"acorn_grass", "squirrel"},
+        {"squirrel_stick", "tree"},
+        {"feather_sock_tree", "baby"},
+        {"bottle_tree", "earth"}
     };
 
 
     public string GetSpecial(string key)
     {
-
 
         if (recipe.ContainsKey(key))
         {

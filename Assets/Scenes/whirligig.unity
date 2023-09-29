@@ -721,7 +721,7 @@ GameObject:
   - component: {fileID: 581212442}
   m_Layer: 5
   m_Name: speechText
-  m_TagString: Untagged
+  m_TagString: voiceText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1038,6 +1038,7 @@ MonoBehaviour:
   - feather
   - stick
   - ribbon
+  - bottle
 --- !u!114 &768620534
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1727,6 +1728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseActive: 1
+  clickContinue: 0
 --- !u!1 &1922232210
 GameObject:
   m_ObjectHideFlags: 0
@@ -1739,6 +1741,8 @@ GameObject:
   - component: {fileID: 1922232212}
   - component: {fileID: 1922232213}
   - component: {fileID: 1922232220}
+  - component: {fileID: 1922232221}
+  - component: {fileID: 1922232222}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -1930,3 +1934,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1922232221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922232210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55c1a26398b69064ea771250a3baa8a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1922232222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1922232210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822df711fee299d4ebe327cffff9db36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  log: []
