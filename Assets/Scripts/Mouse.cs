@@ -6,12 +6,13 @@ public class Mouse : MonoBehaviour
 {
 
     public bool mouseActive = true; //currently not changed by anything
+    Character character;
 
-    public bool clickContinue = false;
 
     private void Start()
     {
         Cursor.visible = false; //turn off hardware mouse
+        character = FindObjectOfType<Character>();
     }
 
     void FollowMouse()
@@ -24,46 +25,34 @@ public class Mouse : MonoBehaviour
         transform.position = mousePosition;
     }
 
-
-    public void clickContinueOn()
-    {
-        clickContinue = true;
-        gameObject.GetComponent<SpriteRenderer>().enabled = false;
-
-        GameObject[] slots = GameObject.FindGameObjectsWithTag("Slot");
-        foreach (var slot in slots)
-        {
-            slot.SetActive(false);
-
-        }
-
-    }
-
-    public void clickContinueOff()
-    {
-        clickContinue = false;
-        gameObject.GetComponent<SpriteRenderer>().enabled = true;
-
-        GameObject[] slots = GameObject.FindGameObjectsWithTag("Slot");
-        foreach (var slot in slots)
-        {
-            slot.SetActive(true);
-
-        }
-
-    }
-
-
     private void Update()
     {
-        if (mouseActive && !clickContinue)       
-            FollowMouse();
+        if (mouseActive)
+        {
+            if (character.clickContinue)
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            }
+            else
+            {
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                FollowMouse();
+            }
 
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            if (clickContinue)
+
+            if (character.clickable)
             {
                 FindObjectOfType<Character>().clickThroughDialogue();
+            }
+
+            Actions actions = FindObjectOfType<Actions>();
+            if (actions.slowTransform != null) 
+            {
+                actions.skip = true;
+                //actions.SkipTransform();    //<< need to come up with better way of doing this
             }
         }
     }

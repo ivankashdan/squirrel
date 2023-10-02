@@ -16,7 +16,6 @@ public class Actions : MonoBehaviour
 
     IEnumerator DelayTransform(string special)
     {
-
         yield return new WaitForSeconds(0.1f);
 
         Character character = FindObjectOfType<Character>();
@@ -29,7 +28,6 @@ public class Actions : MonoBehaviour
         GameObject existing = combo.transform.GetChild(0).gameObject; 
         Destroy(existing);
 
-        Recipe rb = FindObjectOfType<Recipe>();
         AddItem(special, combo.transform);
     }
 
@@ -57,19 +55,18 @@ public class Actions : MonoBehaviour
             if (Resources.Load("Combos/" + comboName)) //add combo if it exist
             {
                 AddItem(comboName, combo.transform);
-
                 string special = rb.GetSpecial(comboName);
 
                 if (special!="") //transform into special if it exist
                 {
-                    if (FindObjectOfType<cDialogue>().checkLog(special) == -1)
+                    Character character = FindObjectOfType<Character>();
+                    if (FindObjectOfType<cDialogue>().checkLog(special) == -1 && character.toDo.Count > 0)
                     {
                         StartCoroutine(DelayTransform(special));
                     }
                     else
                     {
-                        //StartCoroutine(DelayTransform(special));
-                        StartCoroutine(SlowTransform(comboName));
+                        slowTransform = StartCoroutine(SlowTransform(special));
                     }
                 }
 
@@ -170,9 +167,21 @@ public class Actions : MonoBehaviour
 
     }
 
-    private IEnumerator SlowTransform(string comboName)
+    public Coroutine slowTransform;
+    public bool skip = false; 
+   
+    private IEnumerator SlowTransform(string special)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.1f);
+
+        skip = false; //allow to skip wait if there is a mouse click
+        float startTime = Time.time;
+        while (!skip && Time.time - startTime < 1f)  
+        {
+            yield return null;
+        }
+        skip = false;
+        //yield return new WaitForSeconds(1);
 
         Combo combo = FindObjectOfType<Combo>();
         if (combo.transform.childCount == 0)
@@ -182,10 +191,17 @@ public class Actions : MonoBehaviour
         GameObject existing = combo.transform.GetChild(0).gameObject; //need something to protect if move early here
         Destroy(existing);
 
-        Recipe rb = FindObjectOfType<Recipe>();
-        AddItem(rb.GetSpecial(comboName), combo.transform);
+        AddItem(special, combo.transform);
     }
 
+    public void SkipTransform(string special)
+    {
+        Combo combo = FindObjectOfType<Combo>();  //could replace above
+        GameObject existing = combo.transform.GetChild(0).gameObject; //need something to protect if move early here
+        Destroy(existing);
+
+        AddItem(special, combo.transform);
+    }
     private IEnumerator DelaySpool(string item)
     {
         yield return new WaitForSeconds(0.1f);

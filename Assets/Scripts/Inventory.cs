@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 public class Inventory : MonoBehaviour
 {
@@ -53,7 +54,10 @@ public class Inventory : MonoBehaviour
         if (refreshing == false)
         {
             refreshing = true;
+
             yield return new WaitForSeconds(0.01f);
+
+            Hidden(true);
 
             foreach (Transform slot in transform)
             {
@@ -86,10 +90,22 @@ public class Inventory : MonoBehaviour
                     }
                 }
             }
+            Hidden(false);
+
             refreshing = false;
         }
-
+       
     }
+
+    void Hidden(bool b)
+    {
+        Character character = FindObjectOfType<Character>();
+        if (!character.clickContinue)
+        {
+            character.ToggleInvVisible(!b); //reveal inv aftering processing
+        }
+    }
+
     void Hide(GameObject item)
     {
         item.GetComponent<SpriteRenderer>().enabled = false;
@@ -98,8 +114,9 @@ public class Inventory : MonoBehaviour
 
     void Reveal(GameObject item)
     {
-        item.GetComponent<SpriteRenderer>().enabled = true; 
+        item.GetComponent<SpriteRenderer>().enabled = true;
         item.GetComponent<PolygonCollider2D>().enabled = true;
+        
     }
 
     

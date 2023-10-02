@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Item : MonoBehaviour
 {
@@ -54,11 +55,11 @@ public class Item : MonoBehaviour
                 gameObject.AddComponent<PolygonCollider2D>();
         }
 
-        if (transform.parent.name == "Slot") //resize
+        if (transform.parent.tag == "Slot") //resize
         {
             ResizeItem(gameObject, scaleDefault);
         }
-        else if (transform.parent.name == "Combo")
+        else if (transform.parent.tag == "Combo")
         {
             FindObjectOfType<cDialogue>().elderComment(transform.name);
         }
@@ -72,17 +73,22 @@ public class Item : MonoBehaviour
     private void OnMouseOver()   //need to figure out how to get this into 'Mouse' script
     {
         Mouse mouse = FindObjectOfType<Mouse>();
-        if (mouse.mouseActive && !mouse.clickContinue)
+        Character character = FindObjectOfType<Character>();
+        if (mouse.mouseActive && !character.clickContinue)
         {
+            //actionText 
+            GameObject actionText = GameObject.FindWithTag("actionText");
+            actionText.GetComponent<TMP_Text>().text = "Select item with 'LMB'";
+
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (transform.parent.name == "Slot")
+                if (transform.parent.tag == "Slot")
                 {
                     FindObjectOfType<Actions>().SelectItem(gameObject);
 
                 }
-                else if (transform.parent.name == "Combo")
+                else if (transform.parent.tag == "Combo")
                 {
                     FindObjectOfType<Actions>().Return(gameObject);
                 }
@@ -90,8 +96,10 @@ public class Item : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                FindObjectOfType<Actions>().Unspool(gameObject);
-
+                if (transform.parent.tag == "Slot")
+                {
+                    FindObjectOfType<Actions>().Unspool(gameObject);
+                }
             }
 
         }

@@ -5,7 +5,6 @@ using System.IO;
 
 public class cDialogue : MonoBehaviour
 {
-
     public List<string> log = new List<string>();
 
     public int checkLog(string combo)
@@ -24,14 +23,12 @@ public class cDialogue : MonoBehaviour
 
     public void elderComment(string item)   // integrate back into Character?
     {
-        Character cRoger = FindObjectOfType<Character>();
-        cRoger.ClearText(); //Clear text backlog for new paragraph
-
         //objectives.checkQuests(s.name);
 
         log.Add(item); 
         int c = checkLog(item); //check log
 
+        Character cRoger = FindObjectOfType<Character>();
         if (c == 1)
         {
             switch (item)
@@ -117,279 +114,110 @@ public class cDialogue : MonoBehaviour
                     cRoger.Say("You can't stay here for long");
                     cRoger.Say("This is private land now");
                     break;
-
+                case "plutonium_tent":
+                    cRoger.Say("No-one can stay here...");
+                    break;
+                case "birdGF_drum":
+                    cRoger.Say("It flew away...");
+                    break;
+                case "birdGF_fire":
+                    cRoger.Say("How could you?");
+                    cRoger.Say("");
+                    cRoger.Say("Good for a cold, however");
+                    break;
+                case "birdGF_bottle_fire":
+                    cRoger.Say("People will eat anything");
+                    break;
+                case "bottle_rock":
+                    cRoger.Say("A rudimentary instrument?");
+                    break;
+                case "fire":
+                    cRoger.Say("The tinder catches...");
+                    cRoger.Say("Even in this wind"); ;
+                    break;
+                case "fire_plutonium":
+                    cRoger.Say("A fire that never stops burning");
+                    break;
+                case "acorn_grass":
+                    cRoger.Say("Fruit and nuts will support a population");
+                    break;
+                case "lightning":
+                    cRoger.Say("Lightning strikes with no warning");
+                    cRoger.Say("The weather is not what it once was");
+                    break;
+                case "pillow_ribbon_rock":
+                    cRoger.Say("");
+                    cRoger.Say("Shh...");
+                    cRoger.Say("It sleeps");
+                    break;
+                case "rocket":
+                    cRoger.Say("You can fly far on these winds");
+                    cRoger.Say("Farther than you can scarcely imagine");
+                    break;
+                case "rock_rocket":
+                    cRoger.Say("");
+                    cRoger.Say("But the seed of life... needs fertile soil");
+                    break;
+                case "grass_rock_stick":
+                    cRoger.Say("Soon enough, we have an ecosystem");
+                    cRoger.Say("Look under the rock...");
+                    break;
+                case "acorn_snail":
+                    cRoger.Say("Our little friend has evolved to eat almost anything");
+                    break;
+                case "acorn_ribbon_snail":
+                    cRoger.Say("So cute");
+                    break;
+                case "bottle_snail":
+                    cRoger.Say("The world seems... smaller than it was before");
+                    break;
+                case "acorn_bottle_snail":
+                    cRoger.Say("The food doesn't taste as good");
+                    break;
+                case "catkin":
+                    cRoger.Say("The catkin is flowering");
+                    break;
+                case "bottle_catkin":
+                    cRoger.Say("Pretty...");
+                    break;
+                case "flowerpot":
+                    cRoger.Say("");
+                    cRoger.Say("It can grow no further");
+                    break;
+                case "tree":
+                    cRoger.Say("Each tree is a house");
+                    break;
+                case "feather_tree":
+                    cRoger.Say("For a family");
+                    break;
+                case "feather_sock_tree":
+                    cRoger.Say("");
+                    cRoger.Say("Warmth can be simulated");
+                    break;
+                case "sushi_tea":
+                    cRoger.Say("Delicious, with a hot cup of tea");
+                    break;
+                case "acorn_bottle":
+                    cRoger.Say("A nutty...");
+                    break;
+                case "teapot":
+                    cRoger.Say("Cuppa");
+                    break;
+                case "fire_teapot":
+                    cRoger.Say("");
+                    break;
+                case "tea":
+                    cRoger.Say("");
+                    cRoger.Say("Be warm and welcome");
+                    break;
+                case "birdGF_tea":
+                    cRoger.Say("");
+                    cRoger.Say("Relax");
+                    cRoger.Say("You've earned it");
+                    break;
                 default:
                     Debug.Log(item + " dialogue not found");
                     break;
-
-
-                    //case combosEnum.plutonium_tent:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("No-one can stay here...");
-                    //    }
-                    //    break;
-                    ////case combosEnum.stick_sock:
-                    ////    break;
-                    ////case combosEnum.bbq:
-                    ////    if (c == 0)
-                    ////    {
-                    ////        cRoger.Say("An alternative to meat");
-                    ////    }
-                    ////    break;
-                    ////case combosEnum.bbq_grass:
-                    ////    if (c == 0)
-                    ////    {
-                    ////        cRoger.Say("Some seasoning...");
-                    ////    }
-                    ////    break;
-                    //case combosEnum.birdGF_drum:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("It flew away...");
-                    //    }
-                    //    break;
-                    //case combosEnum.birdGF_fire:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("How could you?");
-                    //        cRoger.Say("");
-                    //        cRoger.Say("Good for a cold, however");
-                    //    }
-                    //    break;
-                    //case combosEnum.birdGF_bottle_fire:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("People will eat anything");
-                    //    }
-                    //    break;
-                    //case combosEnum.bottle_feather:
-                    //    break;
-                    //case combosEnum.bottle_ribbon:
-                    //    break;
-                    //case combosEnum.bottle_rock:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("A rudimentary instrument?");
-                    //    }
-                    //    break;
-                    //case combosEnum.drum:
-                    //    break;
-                    //case combosEnum.feather:
-                    //    break;
-                    //case combosEnum.acorn_feather:
-                    //    break;
-                    //case combosEnum.fire:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("The tinder catches...");
-                    //        cRoger.Say("Even in this wind");
-                    //    }
-                    //    break;
-                    //case combosEnum.fire_plutonium:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("A fire that never stops burning");
-                    //    }
-                    //    break;
-
-                    ////case combosEnum.food:
-                    ////    if (c == 0)
-                    ////    {
-                    ////        cRoger.Say("Voila!");
-                    ////    }
-                    ////    break;
-                    //case combosEnum.acorn_grass:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Fruit and nuts will support a population");
-                    //        //cRoger.Say("Here it comes...");
-                    //    }
-                    //    break;
-                    //case combosEnum.grass_ribbon:
-                    //    break;
-                    //case combosEnum.lightning:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Lightning strikes with no warning");
-                    //        cRoger.Say("The weather is not what it once was");
-                    //    }
-                    //    break;
-                    //case combosEnum.pillow_ribbon_rock:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("");
-                    //        cRoger.Say("Shh...");
-                    //        cRoger.Say("It sleeps");
-                    //    }
-                    //    break;
-                    //case combosEnum.rock:
-                    //    break;
-                    //case combosEnum.acorn_rock:
-                    //    break;
-                    //case combosEnum.feather_rock:
-                    //    break;
-                    //case combosEnum.rocket:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("You can fly far on these winds");
-                    //        cRoger.Say("Farther than you can scarcely imagine");
-                    //    }
-                    //    break;
-                    //case combosEnum.rock_rocket:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("");
-                    //        cRoger.Say("But the seed of life... needs fertile soil");
-                    //    }
-                    //    break;
-                    //case combosEnum.grass_rock:
-                    //    break;
-                    //case combosEnum.grass_stick:
-                    //    break;
-                    //case combosEnum.grass_rock_stick:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Soon enough, we have an ecosystem");
-                    //        cRoger.Say("Look under the rock...");
-                    //        cRoger.Say("");
-                    //    }
-                    //    break;
-                    //case combosEnum.snail:
-                    //    break;
-                    //case combosEnum.acorn_snail:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Our little friend has evolved to eat almost anything");
-                    //    }
-                    //    break;
-                    //case combosEnum.ribbon_snail:
-                    //    break;
-                    //case combosEnum.acorn_ribbon_snail:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("So cute");
-                    //    }
-                    //    break;
-                    //case combosEnum.bottle_snail:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("The world seems... smaller than it was before");
-                    //    }
-                    //    break;
-                    //case combosEnum.acorn_bottle_snail:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("The food doesn't taste as good");
-                    //    }
-                    //    break;
-                    //case combosEnum.bottle_ribbon_snail:
-                    //    break;
-                    //case combosEnum.acorn_bottle_ribbon_snail:
-                    //    break;
-                    //case combosEnum.feather_sock:
-                    //    break;
-                    //case combosEnum.ribbon_sock:
-                    //    break;
-                    //case combosEnum.ribbon_stick:
-                    //    break;
-                    //case combosEnum.catkin:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("The catkin is flowering");
-                    //    }
-                    //    break;
-                    //case combosEnum.bottle_catkin:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Pretty...");
-                    //    }
-                    //    break;
-                    //case combosEnum.flowerpot:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("");
-                    //        cRoger.Say("It can grow no further");
-                    //    }
-                    //    break;
-                    //case combosEnum.squirrel:
-                    //    if (c == 0)
-                    //    {
-                    //        //cRoger.Say("Fruit and nuts will support a population");
-                    //    }
-                    //    break;
-                    //case combosEnum.tree:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Each tree is a house");
-                    //    }
-                    //    break;
-                    //case combosEnum.feather_tree:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("For a family");
-                    //    }
-                    //    break;
-                    //case combosEnum.feather_sock_tree:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("");
-                    //        cRoger.Say("Warmth can be simulated");
-                    //    }
-                    //    break;
-                    //case combosEnum.baby:
-                    //    break;
-                    //case combosEnum.acorn_ribbon:
-                    //    break;
-                    //case combosEnum.stick:
-                    //    break;
-                    //case combosEnum.acorn_stick:
-                    //    break;
-                    //case combosEnum.bottle_stick:
-                    //    break;
-                    //case combosEnum.feather_stick:
-                    //    break;
-                    //case combosEnum.sushi_tea:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Delicious, with a hot cup of tea");
-                    //    }
-                    //    break;
-                    //case combosEnum.acorn_bottle:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("A nutty...");
-                    //    }
-                    //    break;
-                    //case combosEnum.teapot:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("Cuppa");
-                    //    }
-                    //    break;
-                    //case combosEnum.fire_teapot:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("");
-                    //    }
-                    //    break;
-                    //case combosEnum.tea:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("");
-                    //        cRoger.Say("Be warm and welcome");
-                    //    }
-                    //    break;
-                    //case combosEnum.birdGF_tea:
-                    //    if (c == 0)
-                    //    {
-                    //        cRoger.Say("");
-                    //        cRoger.Say("Relax");
-                    //        cRoger.Say("You've earned it");
-                    //    }
-                    //    break;
-                    //default:
-                    //    break;
             }
 
         }
