@@ -53,11 +53,15 @@ public class Inventory : MonoBehaviour
     {
         if (refreshing == false)
         {
+
+
             refreshing = true;
+
+            string special = "";
 
             yield return new WaitForSeconds(0.01f);
 
-            Hidden(true);
+            //Hidden(true);
 
             foreach (Transform slot in transform)
             {
@@ -77,7 +81,7 @@ public class Inventory : MonoBehaviour
                     else
                     {
                         string existing = combo.transform.GetChild(0).name;
-                        string special = action.NewComboName(item.name, existing);
+                        special = action.NewComboName(item.name, existing);
 
                         if (Resources.Load("Combos/" + special) == false && Resources.Load("Combos/" + rb.GetSpecial(special)) == false)
                         {
@@ -90,7 +94,8 @@ public class Inventory : MonoBehaviour
                     }
                 }
             }
-            Hidden(false);
+
+            //Hidden(false);
 
             refreshing = false;
         }

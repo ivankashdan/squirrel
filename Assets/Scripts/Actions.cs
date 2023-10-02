@@ -10,6 +10,7 @@ public class Actions : MonoBehaviour
     {
         GameObject newItem = new GameObject(name);
         newItem.transform.parent = destination;
+        newItem.layer = LayerMask.NameToLayer("Items");
         newItem.AddComponent<Item>();
 
     }
@@ -54,8 +55,8 @@ public class Actions : MonoBehaviour
 
             if (Resources.Load("Combos/" + comboName)) //add combo if it exist
             {
-                AddItem(comboName, combo.transform);
                 string special = rb.GetSpecial(comboName);
+                AddItem(comboName, combo.transform);
 
                 if (special!="") //transform into special if it exist
                 {
@@ -172,6 +173,10 @@ public class Actions : MonoBehaviour
    
     private IEnumerator SlowTransform(string special)
     {
+
+        Character character = FindObjectOfType<Character>();
+        character.ToggleInvVisible(false);
+
         yield return new WaitForSeconds(0.1f);
 
         skip = false; //allow to skip wait if there is a mouse click
@@ -181,7 +186,8 @@ public class Actions : MonoBehaviour
             yield return null;
         }
         skip = false;
-        //yield return new WaitForSeconds(1);
+        slowTransform = null;
+
 
         Combo combo = FindObjectOfType<Combo>();
         if (combo.transform.childCount == 0)
@@ -192,6 +198,12 @@ public class Actions : MonoBehaviour
         Destroy(existing);
 
         AddItem(special, combo.transform);
+
+        yield return new WaitForSeconds(0.1f);
+
+        character.ToggleInvVisible(true);
+
+
     }
 
     public void SkipTransform(string special)

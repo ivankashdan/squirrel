@@ -12,6 +12,13 @@ public class Character : MonoBehaviour
 
     Coroutine clearTextBackground;
 
+    private void Start()
+    {
+        GameObject voiceText = GameObject.FindWithTag("voiceText"); //clear opening text
+        TMP_Text textComp = voiceText.GetComponent<TMP_Text>();
+        textComp.text = "";
+    }
+
     public void SayBackground(string dialogue)
     {
         GameObject voiceText = GameObject.FindWithTag("voiceText");

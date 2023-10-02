@@ -1,63 +1,156 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Mouse : MonoBehaviour
 {
 
     public bool mouseActive = true; //currently not changed by anything
-    Character character;
+    public Color fadeColor = new Color(1f, 1f, 1f, 0.5f); // Adjust alpha as needed
 
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+
+    Character character;
+    Actions actions;
+    Recipe recipe;
+
+    TMP_Text actionText;
+
+    Vector2 mousePosition;
+    RaycastHit2D hit;
+    RaycastHit2D hitItem;
 
     private void Start()
     {
         Cursor.visible = false; //turn off hardware mouse
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+
         character = FindObjectOfType<Character>();
+        actions = FindObjectOfType<Actions>();
+        recipe = FindObjectOfType<Recipe>();
+
+        actionText = GameObject.FindWithTag("actionText").GetComponent<TMP_Text>();
+        actionText.text = "";
     }
 
     void FollowMouse()
     {
-        // Get the mouse position in world coordinates
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0; // Make sure the object stays at the same z-coordinate
-
-        // Move the object to the mouse position
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = mousePosition;
     }
 
     private void Update()
     {
-        if (mouseActive)
-        {
-            if (character.clickContinue)
-            {
-                gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            }
-            else
-            {
-                gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                FollowMouse();
-            }
+        if (!mouseActive)
+            return;
 
-        }
-        if (Input.GetMouseButtonDown(0))
+        if (character.clickContinue)
         {
+            actionText.text = "Press 'LMB' to continue";
+
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
             if (character.clickable)
             {
-                FindObjectOfType<Character>().clickThroughDialogue();
+                if (Input.GetMouseButtonDown(0)) 
+                {
+                    character.clickThroughDialogue();
+                }
             }
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
 
-            Actions actions = FindObjectOfType<Actions>();
-            if (actions.slowTransform != null) 
+            FollowMouse();
+
+            
+            if (actions.slowTransform != null) //need to update this so it works again...
             {
-                actions.skip = true;
-                //actions.SkipTransform();    //<< need to come up with better way of doing this
+                actionText.text = ""; ////during a slow transform
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    actions.skip = true;
+                }
+            }
+            
+            // Check if the mouse is over a collider
+            else if (IsMouseOverCollider())
+            {
+
+                if (hit.collider.tag == "Combo")
+                {
+                    if (hit.collider.transform.childCount > 0)
+                    {
+                        actionText.text = "Press 'LMB' to return";
+                    }
+                    else
+                    {
+                        actionText.text = ""; //nothing in combo
+                    }
+                }
+                else if (hit.collider.tag == "Inventory")
+                {
+                    actionText.text = "Press 'LMB' to select";
+                }
+                
+                if (IsMouseOverItemCollider())
+                {
+                    spriteRenderer.color = originalColor;
+
+                    if (hitItem.collider.transform.parent.tag == "Slot")
+                    {
+                        if (recipe.GetRecipe(hitItem.collider.name) != "")
+                        {
+                            actionText.text = "Press 'LMB' to select / 'RMB' to unspool";
+                        }
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            actions.SelectItem(hitItem.collider.gameObject);
+                        }
+                        else if (Input.GetMouseButtonDown(1))
+                        {
+                            actions.Unspool(hitItem.collider.gameObject);
+                        }
+                    }
+                    else if (hitItem.collider.transform.parent.tag == "Combo")
+                    {
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            actions.Return(hitItem.collider.gameObject);
+                        }
+                    }
+                }
+                else
+                {
+                    spriteRenderer.color = fadeColor;
+                }
+            }
+            else
+            {
+                spriteRenderer.color = fadeColor;
+                actionText.text = "";
             }
         }
     }
 
-   
+
+    bool IsMouseOverCollider()
+    {
+        hit = Physics2D.Raycast(mousePosition, Vector2.zero);
+        return hit.collider != null;
+    }
+
+    bool IsMouseOverItemCollider()
+    {
+        hitItem = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Items"));
+        return hitItem.collider != null;
+    }
 
 
 
@@ -67,4 +160,5 @@ public class Mouse : MonoBehaviour
 
 
 
-}
+
+    }

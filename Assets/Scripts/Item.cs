@@ -23,19 +23,13 @@ public class Item : MonoBehaviour
             // Apply the scale factor uniformly to maintain aspect ratio
             Vector3 newScale = new Vector3(largestScaleFactor * scaleDefault, largestScaleFactor * scaleDefault, 1f);
             item.transform.localScale = newScale;
-
-            // Destroy and recreate the Polygon Collider2D component
-            Destroy(collider);
-            PolygonCollider2D newCollider = item.AddComponent<PolygonCollider2D>();
         }
     }
 
     private void Awake()
     {
 
-        const float posDefault = 0f;
-        transform.localPosition = new Vector3(posDefault, posDefault, posDefault);
-
+        transform.localPosition = new Vector3(0, 0, 0);
         float scaleDefault = 0.076f;
         transform.localScale = new Vector3(scaleDefault, scaleDefault, 1f);
 
@@ -58,9 +52,14 @@ public class Item : MonoBehaviour
         if (transform.parent.tag == "Slot") //resize
         {
             ResizeItem(gameObject, scaleDefault);
+
+
         }
         else if (transform.parent.tag == "Combo")
         {
+            if (Resources.Load("SFX/" + transform.name)) //play Sounds if it exists
+                transform.parent.GetComponent<AudioSource>().PlayOneShot(Resources.Load("SFX/" + transform.name, typeof(AudioClip)) as AudioClip);
+
             FindObjectOfType<cDialogue>().elderComment(transform.name);
         }
 
@@ -70,43 +69,8 @@ public class Item : MonoBehaviour
     }
 
 
-    private void OnMouseOver()   //need to figure out how to get this into 'Mouse' script
-    {
-        Mouse mouse = FindObjectOfType<Mouse>();
-        Character character = FindObjectOfType<Character>();
-        if (mouse.mouseActive && !character.clickContinue)
-        {
-            //actionText 
-            GameObject actionText = GameObject.FindWithTag("actionText");
-            actionText.GetComponent<TMP_Text>().text = "Select item with 'LMB'";
-
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (transform.parent.tag == "Slot")
-                {
-                    FindObjectOfType<Actions>().SelectItem(gameObject);
-
-                }
-                else if (transform.parent.tag == "Combo")
-                {
-                    FindObjectOfType<Actions>().Return(gameObject);
-                }
-
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                if (transform.parent.tag == "Slot")
-                {
-                    FindObjectOfType<Actions>().Unspool(gameObject);
-                }
-            }
-
-        }
-
-    }
-
-
+ 
+ 
 
 
 
