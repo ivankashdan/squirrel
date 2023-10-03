@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Recipe : MonoBehaviour
+public class Recipe
 {
 
-    public Dictionary<string, string> recipe = new Dictionary<string, string>()
+    public static Dictionary<string, string> recipe = new Dictionary<string, string>()
     {
        
         {"sock_stick", "tent"},
@@ -31,7 +31,62 @@ public class Recipe : MonoBehaviour
     };
 
 
-    public string GetSpecial(string key)
+    public static List<string> ListStarters()
+    {
+        List<string> starters = new List<string>();
+        //WIP
+        return starters;
+    }
+
+    public static List<string> ListSpecials()
+    {
+        List<string> specials = new List<string>();
+
+        foreach (var r in recipe)
+        {
+            specials.Add(r.Value);
+
+        }
+
+        specials.Sort((a, b) => a.CompareTo(b)); //sort alphabetically
+
+        return specials;
+    }
+
+    public static bool ContainsSpecial(string combo)
+    {
+        string[] parts = combo.Split("_");
+
+        foreach (var p in parts)
+        {
+            if (IsSpecial(p))
+            {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public static bool IsSpecial(string item)
+    {
+        if (recipe.ContainsValue(item))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static bool IsPreCombo(string item)
+    {
+        if (recipe.ContainsKey(item))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public static string GetSpecial(string key)
     {
 
         if (recipe.ContainsKey(key))
@@ -48,7 +103,7 @@ public class Recipe : MonoBehaviour
         return "";
     }
 
-    public string GetRecipe(string value)
+    public static string GetRecipe(string value)
     {
 
         if (recipe.ContainsValue(value))

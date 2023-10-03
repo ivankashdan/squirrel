@@ -52,15 +52,13 @@ public class Item : MonoBehaviour
         if (transform.parent.tag == "Slot") //resize
         {
             ResizeItem(gameObject, scaleDefault);
-
-
         }
         else if (transform.parent.tag == "Combo")
         {
             if (Resources.Load("SFX/" + transform.name)) //play Sounds if it exists
                 transform.parent.GetComponent<AudioSource>().PlayOneShot(Resources.Load("SFX/" + transform.name, typeof(AudioClip)) as AudioClip);
 
-            FindObjectOfType<cDialogue>().elderComment(transform.name);
+            FindObjectOfType<Dialogue>().elderComment(transform.name);
         }
 
         Inventory inv = FindObjectOfType<Inventory>();

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Actions : MonoBehaviour
 {
-
+   
     public void AddItem(string name, Transform destination)
     {
         GameObject newItem = new GameObject(name);
@@ -19,13 +19,13 @@ public class Actions : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        Character character = FindObjectOfType<Character>();
-        while (character.toDo.Count > 0)
+        Speech speech = FindObjectOfType<Speech>();
+        while (speech.toDo.Count > 0)
         {
             yield return null;
         }
 
-        Combo combo = FindObjectOfType<Combo>();
+        GameObject combo = GameObject.FindWithTag("Combo");
         GameObject existing = combo.transform.GetChild(0).gameObject; 
         Destroy(existing);
 
@@ -37,7 +37,7 @@ public class Actions : MonoBehaviour
 
         Destroy(item); //remove item from inventory
 
-        Combo combo = FindObjectOfType<Combo>();
+        GameObject combo = GameObject.FindWithTag("Combo");
 
         if (combo.transform.childCount == 0) //place
         {
@@ -51,17 +51,15 @@ public class Actions : MonoBehaviour
 
             Destroy(existing);
 
-            Recipe rb = FindObjectOfType<Recipe>();
-
             if (Resources.Load("Combos/" + comboName)) //add combo if it exist
             {
-                string special = rb.GetSpecial(comboName);
+                string special = Recipe.GetSpecial(comboName);
                 AddItem(comboName, combo.transform);
 
                 if (special!="") //transform into special if it exist
                 {
-                    Character character = FindObjectOfType<Character>();
-                    if (FindObjectOfType<cDialogue>().checkLog(special) == -1 && character.toDo.Count > 0)
+                    Speech speech = FindObjectOfType<Speech>();
+                    if (FindObjectOfType<Dialogue>().checkLog(special) == -1 && speech.toDo.Count > 0)
                     {
                         StartCoroutine(DelayTransform(special));
                     }
@@ -72,9 +70,9 @@ public class Actions : MonoBehaviour
                 }
 
             }
-            else if (Resources.Load("Combos/" + rb.GetSpecial(comboName)))  //check for instant combo
+            else if (Resources.Load("Combos/" + Recipe.GetSpecial(comboName)))  //check for instant combo
             {
-                AddItem(rb.GetSpecial(comboName), combo.transform);
+                AddItem(Recipe.GetSpecial(comboName), combo.transform);
             }
 
         }
@@ -84,8 +82,7 @@ public class Actions : MonoBehaviour
 
     public void Unspool(GameObject item)
     {
-        Recipe rb = FindObjectOfType<Recipe>();
-        if (rb.GetRecipe(item.name) == "")
+        if (Recipe.GetRecipe(item.name) == "")
         {
             return;
         }
@@ -97,8 +94,6 @@ public class Actions : MonoBehaviour
 
         }
     }
-
-
 
     public void Return(GameObject item)
     {
@@ -174,8 +169,8 @@ public class Actions : MonoBehaviour
     private IEnumerator SlowTransform(string special)
     {
 
-        Character character = FindObjectOfType<Character>();
-        character.ToggleInvVisible(false);
+        Inventory inv = FindObjectOfType<Inventory>();
+        inv.ToggleInvVisible(false);
 
         yield return new WaitForSeconds(0.1f);
 
@@ -189,7 +184,7 @@ public class Actions : MonoBehaviour
         slowTransform = null;
 
 
-        Combo combo = FindObjectOfType<Combo>();
+        GameObject combo = GameObject.FindWithTag("Combo");
         if (combo.transform.childCount == 0)
         {
             yield break;
@@ -201,14 +196,12 @@ public class Actions : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
 
-        character.ToggleInvVisible(true);
-
-
+        inv.ToggleInvVisible(true);
     }
 
     public void SkipTransform(string special)
     {
-        Combo combo = FindObjectOfType<Combo>();  //could replace above
+        GameObject combo = GameObject.FindWithTag("Combo");  //could replace above
         GameObject existing = combo.transform.GetChild(0).gameObject; //need something to protect if move early here
         Destroy(existing);
 
@@ -218,8 +211,7 @@ public class Actions : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
 
-        Recipe rb = FindObjectOfType<Recipe>();
-        string recipe = rb.GetRecipe(item);
+        string recipe = Recipe.GetRecipe(item);
 
         foreach (string part in recipe.Split('_'))
         {

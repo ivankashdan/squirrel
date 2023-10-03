@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Character : MonoBehaviour
+public class Speech : MonoBehaviour
 {
     public bool clickContinue = false;
     public bool clickable = false;
@@ -41,7 +41,10 @@ public class Character : MonoBehaviour
             {
                 StopCoroutine(clearTextBackground);
             }
-            ToggleInvVisible(false);
+
+            Inventory inv = FindObjectOfType<Inventory>();
+            inv.ToggleInvVisible(false);
+
             clickContinue = true;
         }
         toDo.Add(dialogue);
@@ -89,35 +92,16 @@ public class Character : MonoBehaviour
         GameObject voiceText = GameObject.FindWithTag("voiceText");
         if (toDo.Count == 0) {
             voiceText.GetComponent<TMP_Text>().text = null;
-            ToggleInvVisible(true);
+
+            Inventory inv = FindObjectOfType<Inventory>();
+            inv.ToggleInvVisible(true);
         }
         
 
     }
 
 
-    public void ToggleInvVisible(bool visible)
-    {
-        GameObject[] slots = GameObject.FindGameObjectsWithTag("Slot");
-        foreach (var slot in slots)
-        {
-            if (slot.transform.childCount > 0)
-            {
-                GameObject item = slot.transform.GetChild(0).gameObject;
-                SpriteRenderer sprite = item.GetComponent<SpriteRenderer>();
-
-                if (visible)
-                {
-                    sprite.sortingLayerName = "UI";
-                }
-                else
-                {
-                    sprite.sortingLayerName = "Hidden";
-                }
-            }
-        }
-    }
-
+  
   
 
 }

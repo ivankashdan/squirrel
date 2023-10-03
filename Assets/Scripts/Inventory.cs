@@ -28,7 +28,6 @@ public class Inventory : MonoBehaviour
         newSlot.transform.localScale = Vector3.one;
 
         pWidth += slotWidth;
-        newSlot.AddComponent<Slot>();
 
         return newSlot;
     }
@@ -61,15 +60,13 @@ public class Inventory : MonoBehaviour
 
             yield return new WaitForSeconds(0.01f);
 
-            //Hidden(true);
 
             foreach (Transform slot in transform)
             {
                 if (slot.transform.childCount > 0)
                 {
                     Actions action = FindObjectOfType<Actions>();
-                    Recipe rb = FindObjectOfType<Recipe>();
-                    Combo combo = FindObjectOfType<Combo>();
+                    GameObject combo = GameObject.FindWithTag("Combo");
 
                     GameObject item = slot.GetChild(0).gameObject;
 
@@ -83,7 +80,7 @@ public class Inventory : MonoBehaviour
                         string existing = combo.transform.GetChild(0).name;
                         special = action.NewComboName(item.name, existing);
 
-                        if (Resources.Load("Combos/" + special) == false && Resources.Load("Combos/" + rb.GetSpecial(special)) == false)
+                        if (Resources.Load("Combos/" + special) == false && Resources.Load("Combos/" + Recipe.GetSpecial(special)) == false)
                         {
                             Hide(item); //hide if it can't make something
                         }
@@ -94,23 +91,10 @@ public class Inventory : MonoBehaviour
                     }
                 }
             }
-
-            //Hidden(false);
-
             refreshing = false;
         }
        
     }
-
-    void Hidden(bool b)
-    {
-        Character character = FindObjectOfType<Character>();
-        if (!character.clickContinue)
-        {
-            character.ToggleInvVisible(!b); //reveal inv aftering processing
-        }
-    }
-
     void Hide(GameObject item)
     {
         item.GetComponent<SpriteRenderer>().enabled = false;
@@ -124,8 +108,29 @@ public class Inventory : MonoBehaviour
         
     }
 
-    
-   
+
+    public void ToggleInvVisible(bool visible)
+    {
+        GameObject[] slots = GameObject.FindGameObjectsWithTag("Slot");
+        foreach (var slot in slots)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                GameObject item = slot.transform.GetChild(0).gameObject;
+                SpriteRenderer sprite = item.GetComponent<SpriteRenderer>();
+
+                if (visible)
+                {
+                    sprite.sortingLayerName = "UI";
+                }
+                else
+                {
+                    sprite.sortingLayerName = "Hidden";
+                }
+            }
+        }
+    }
+
 
 
 }

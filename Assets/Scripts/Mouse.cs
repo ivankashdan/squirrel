@@ -7,12 +7,12 @@ public class Mouse : MonoBehaviour
 {
 
     public bool mouseActive = true; //currently not changed by anything
-    public Color fadeColor = new Color(1f, 1f, 1f, 0.5f); // Adjust alpha as needed
 
     private SpriteRenderer spriteRenderer;
-    private Color originalColor;
+    private Sprite originalPointer;
+    public Sprite itemPointer;
 
-    Character character;
+    Speech speech;
     Actions actions;
     Recipe recipe;
 
@@ -27,11 +27,10 @@ public class Mouse : MonoBehaviour
         Cursor.visible = false; //turn off hardware mouse
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        originalColor = spriteRenderer.color;
+        originalPointer = spriteRenderer.sprite;
 
-        character = FindObjectOfType<Character>();
+        speech = FindObjectOfType<Speech>();
         actions = FindObjectOfType<Actions>();
-        recipe = FindObjectOfType<Recipe>();
 
         actionText = GameObject.FindWithTag("actionText").GetComponent<TMP_Text>();
         actionText.text = "";
@@ -48,17 +47,17 @@ public class Mouse : MonoBehaviour
         if (!mouseActive)
             return;
 
-        if (character.clickContinue)
+        if (speech.clickContinue)
         {
             actionText.text = "Press 'LMB' to continue";
 
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-            if (character.clickable)
+            if (speech.clickable)
             {
                 if (Input.GetMouseButtonDown(0)) 
                 {
-                    character.clickThroughDialogue();
+                    speech.clickThroughDialogue();
                 }
             }
         }
@@ -101,11 +100,11 @@ public class Mouse : MonoBehaviour
                 
                 if (IsMouseOverItemCollider())
                 {
-                    spriteRenderer.color = originalColor;
+                    spriteRenderer.sprite = itemPointer;
 
                     if (hitItem.collider.transform.parent.tag == "Slot")
                     {
-                        if (recipe.GetRecipe(hitItem.collider.name) != "")
+                        if (Recipe.GetRecipe(hitItem.collider.name) != "")
                         {
                             actionText.text = "Press 'LMB' to select / 'RMB' to unspool";
                         }
@@ -128,12 +127,12 @@ public class Mouse : MonoBehaviour
                 }
                 else
                 {
-                    spriteRenderer.color = fadeColor;
+                    spriteRenderer.sprite = originalPointer;
                 }
             }
             else
             {
-                spriteRenderer.color = fadeColor;
+                spriteRenderer.sprite = originalPointer;
                 actionText.text = "";
             }
         }

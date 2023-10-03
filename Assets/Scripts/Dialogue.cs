@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class cDialogue : MonoBehaviour
+public class Dialogue : MonoBehaviour
 {
     public List<string> log = new List<string>();
 
@@ -28,7 +28,7 @@ public class cDialogue : MonoBehaviour
         log.Add(item); 
         int c = checkLog(item); //check log
 
-        Character cRoger = FindObjectOfType<Character>();
+        Speech cRoger = FindObjectOfType<Speech>();
         if (c == 1)
         {
             switch (item)
