@@ -4,17 +4,20 @@
 
 Web-based puzzle game, available to play for free on [kashngerm.itch.io/squirrel](https://kashngerm.itch.io/squirrel/)
 
-## Game features
-- Combine 8 items into 100+ combos!
-- Combine those combos with other combos for even more combos!!
-- Each combo reveals dialogue, developing the narrative
+## How to explore the code database
+- Navigate to Assets > Scripts
+- Select .cs files
+  
+## Where to start
+- [Actions.cs] Combine 8 items into 100+ combos! 
+- [Recipe.cs] Combine those combos with other combos for even more combos!! 
+- [Dialogue.cs] Each combo reveals dialogue, developing the narrative 
 
-## Repository
-- Latest experimental build created in Unity 2022.3.3f1
-- Download and explore the WIP, reconstructing it in Unity
-- 2 scenes. 'Whirligig' is the game itself. 'MapTool' is a tool we use to visualize our complicated combination branches.
+## Open in Unity
+- Download the latest build
+- Open in Unity 2022
 
-## Plans
+## Future plans
 - New combos
 - New dialogue
 - New characters
