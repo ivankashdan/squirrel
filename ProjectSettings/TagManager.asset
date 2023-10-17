@@ -10,6 +10,8 @@ TagManager:
   - Inventory
   - actionText
   - Found
+  - Hint
+  - Character
   layers:
   - Default
   - TransparentFX

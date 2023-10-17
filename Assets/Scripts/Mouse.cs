@@ -13,8 +13,10 @@ public class Mouse : MonoBehaviour
     public Sprite itemPointer;
 
     Speech speech;
+    Dialogue dialogue;
     Actions actions;
     Recipe recipe;
+
 
     TMP_Text actionText;
 
@@ -30,6 +32,7 @@ public class Mouse : MonoBehaviour
         originalPointer = spriteRenderer.sprite;
 
         speech = FindObjectOfType<Speech>();
+        dialogue = FindObjectOfType<Dialogue>();
         actions = FindObjectOfType<Actions>();
 
         actionText = GameObject.FindWithTag("actionText").GetComponent<TMP_Text>();
@@ -77,7 +80,6 @@ public class Mouse : MonoBehaviour
                     actions.skip = true;
                 }
             }
-            
             // Check if the mouse is over a collider
             else if (IsMouseOverCollider())
             {
@@ -97,7 +99,15 @@ public class Mouse : MonoBehaviour
                 {
                     actionText.text = "Press 'LMB' to select";
                 }
-                
+                else if (hit.collider.tag == "Character")
+                {
+                    actionText.text = "Press 'LMB' for hint";
+
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        dialogue.Hint();
+                    }
+                }
                 if (IsMouseOverItemCollider())
                 {
                     spriteRenderer.sprite = itemPointer;
@@ -124,6 +134,7 @@ public class Mouse : MonoBehaviour
                             actions.Return(hitItem.collider.gameObject);
                         }
                     }
+                   
                 }
                 else
                 {
@@ -150,6 +161,8 @@ public class Mouse : MonoBehaviour
         hitItem = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, LayerMask.GetMask("Items"));
         return hitItem.collider != null;
     }
+
+    
 
 
 

@@ -59,7 +59,7 @@ public class Actions : MonoBehaviour
                 if (special!="") //transform into special if it exist
                 {
                     Speech speech = FindObjectOfType<Speech>();
-                    if (FindObjectOfType<Dialogue>().checkLog(special) == -1 && speech.toDo.Count > 0)
+                    if (FindObjectOfType<Dialogue>().CheckLog(special) == -1 && speech.toDo.Count > 0)
                     {
                         StartCoroutine(DelayTransform(special));
                     }
@@ -220,7 +220,7 @@ public class Actions : MonoBehaviour
         }
     }
 
-
+  
   
 
 }

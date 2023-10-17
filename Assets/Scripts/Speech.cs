@@ -58,7 +58,9 @@ public class Speech : MonoBehaviour
 
         GameObject voiceText = GameObject.FindWithTag("voiceText");
 
-        voiceText.GetComponent<TMP_Text>().text = toDo[0];
+        if (toDo.Count > 0)
+            voiceText.GetComponent<TMP_Text>().text = toDo[0];
+
         clickable = true;
     }
 

@@ -6,11 +6,11 @@ using System.IO;
 public class Dialogue : MonoBehaviour
 {
     public List<string> log = new List<string>();
+    public List<string> objectives = new List<string>();
 
-    public int checkLog(string combo)
+    public int CheckLog(string combo)
     {
         int count = 0;
-
         foreach (string i in log)
         {
             if (i == combo)
@@ -21,19 +21,66 @@ public class Dialogue : MonoBehaviour
         return count - 1;
     }
 
-    public void elderComment(string item)   // integrate back into Character?
+    int hintNumber = 0;
+
+    public void Hint() 
     {
-        //objectives.checkQuests(s.name);
+        if (objectives.Count > 0)
+        {
+            Speech cRoger = FindObjectOfType<Speech>();
+
+            // Increment hintNumber and wrap around if it exceeds the number of objectives
+            hintNumber++;
+            if (hintNumber >= objectives.Count)
+            {
+                hintNumber = 0;
+            }
+
+            cRoger.Say(objectives[hintNumber]);
+        }
+
+    }
+
+    string GetObjective(string item) //WIP
+    {
+        switch (item)
+        {
+            case "acorn":
+            case "squirrel":
+                return "How do I draw out the squirrel?";
+            case "ribbon":
+            case "kite":
+                return "How to make the kite fly?";
+            default:
+                return "";
+        }
+    }
+
+    void CheckObjective(string item) //WIP
+    {
+        if (CheckLog(item) > 0) //if item name is in log
+        {
+            objectives.Remove(GetObjective(item)); //remove the objective for this item
+        }
+        else //if item name is not in log
+        {
+            objectives.Add(GetObjective(item)); //add the objective for this item
+        }
+    }
+
+    public void ElderComment(string item)
+    {
+        //checkObjective(item);
 
         log.Add(item); 
-        int c = checkLog(item); //check log
+        int c = CheckLog(item);
 
         Speech cRoger = FindObjectOfType<Speech>();
         if (c == 1)
         {
             switch (item)
             {
-                case "ribbon_stocking":
+                case "present":
                     cRoger.Say("Who is it for?");
                     break;
             }
@@ -42,20 +89,20 @@ public class Dialogue : MonoBehaviour
         {
             switch (item)
             {
+                case "birdGF_ribbon":
+                    cRoger.Say("Stunning!");
+                    break;
                 case "ribbon_rock":
                     cRoger.SayBackground("Ah... a pet, perhaps?");
                     break;
                 case "acorn":
-                    cRoger.SayBackground("A squirrel must have buried it...");
-                    //make a squirrel objective
+                    cRoger.SayBackground("A squirrel must have buried it..."); //
                     break;
                 case "grass":
                     cRoger.SayBackground("Plenty of grass around here");
                     break;
                 case "ribbon":
-                    cRoger.SayBackground("A ribbon... perhaps it belonged to a kite?");
-                    //cRoger.SayBackground("A ribbon... perhaps it belonged to a <color=yellow>kite</color>?");
-                    //objectives.addQuest("Make a kite", "kite");
+                    cRoger.SayBackground("A ribbon... perhaps it belonged to a <color=#ffd5d5>kite</color>?"); //<color=#ff00ffff> </color>
                     break;
                 case "sock":
                     cRoger.SayBackground("Hmm... no, it's not one of mine");
@@ -69,11 +116,11 @@ public class Dialogue : MonoBehaviour
                 case "stocking":
                     cRoger.Say("Still something at the bottom of the stocking");
                     break;
-                case "ribbon_stocking":
+                case "present":
                     cRoger.Say("Merry christmas");
-                    cRoger.Say("But who is it for?");
+                    cRoger.Say("But who is it for?"); //
                     break;
-                case "birdGF_ribbon_stocking":
+                case "birdGF_present":
                     cRoger.Say("How thoughtful. A heart-shaped stone");
                     break;
                 case "grass_sock":
@@ -100,7 +147,7 @@ public class Dialogue : MonoBehaviour
                     break;
                 case "kite":
                     cRoger.Say("A kite... with no tether");
-                    cRoger.Say("Where will it blow next?");
+                    cRoger.Say("Where will it blow next?"); //
                     break;
                 case "bottle_grass":
                     cRoger.Say("Oh dear...");
@@ -169,7 +216,7 @@ public class Dialogue : MonoBehaviour
                     cRoger.Say("So cute");
                     break;
                 case "bottle_snail":
-                    cRoger.Say("The world seems... smaller than it was before");
+                    cRoger.Say("The world seems... smaller than it was before"); //
                     break;
                 case "acorn_bottle_snail":
                     cRoger.Say("The food doesn't taste as good");
@@ -182,17 +229,38 @@ public class Dialogue : MonoBehaviour
                     break;
                 case "flowerpot":
                     cRoger.Say("");
-                    cRoger.Say("It can grow no further");
+                    cRoger.Say("It can grow no further"); //
                     break;
                 case "tree":
                     cRoger.Say("Each tree is a house");
                     break;
+                case "bottle_tree":
+                    cRoger.Say("Each house...");
+                    break;
+                case "earth":
+                    cRoger.Say("Is a world");
+                    break;
+                case "earth_rock":
+                    cRoger.Say("There are other houses");
+                    cRoger.Say("But there is only one we can call home");
+                    //cRoger.Say("An abandoned home");
+                    break;
+                case "earth_sock":
+                    cRoger.Say("");
+                    cRoger.Say("It burns...");
+                    break;
                 case "feather_tree":
-                    cRoger.Say("For a family");
+                    cRoger.Say("For a family"); //
+                    break;
+                case "bottle_feather_tree":
+                    cRoger.Say("");
+                    cRoger.Say("The things we'll eat"); //
+                    cRoger.Say("As long as it's in a bottle");
+                    //cRoger.Say("Never mind where it comes from");
                     break;
                 case "feather_sock_tree":
                     cRoger.Say("");
-                    cRoger.Say("Warmth can be simulated");
+                    cRoger.Say("Warmth can be simulated"); //
                     break;
                 case "sushi_tea":
                     cRoger.Say("Delicious, with a hot cup of tea");

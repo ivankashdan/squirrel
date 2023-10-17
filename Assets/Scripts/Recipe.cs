@@ -27,7 +27,8 @@ public class Recipe
         {"acorn_grass", "squirrel"},
         {"squirrel_stick", "tree"},
         {"feather_sock_tree", "baby"},
-        {"bottle_tree", "earth"}
+        {"bottle_tree", "earth"},
+        {"ribbon_stocking", "present" }
     };
 
 
