@@ -6,7 +6,6 @@ using System.IO;
 public class Dialogue : MonoBehaviour
 {
     public List<string> log = new List<string>();
-    public List<string> objectives = new List<string>();
 
     public int CheckLog(string combo)
     {
@@ -21,57 +20,8 @@ public class Dialogue : MonoBehaviour
         return count - 1;
     }
 
-    int hintNumber = 0;
-
-    public void Hint() 
-    {
-        if (objectives.Count > 0)
-        {
-            Speech cRoger = FindObjectOfType<Speech>();
-
-            // Increment hintNumber and wrap around if it exceeds the number of objectives
-            hintNumber++;
-            if (hintNumber >= objectives.Count)
-            {
-                hintNumber = 0;
-            }
-
-            cRoger.Say(objectives[hintNumber]);
-        }
-
-    }
-
-    string GetObjective(string item) //WIP
-    {
-        switch (item)
-        {
-            case "acorn":
-            case "squirrel":
-                return "How do I draw out the squirrel?";
-            case "ribbon":
-            case "kite":
-                return "How to make the kite fly?";
-            default:
-                return "";
-        }
-    }
-
-    void CheckObjective(string item) //WIP
-    {
-        if (CheckLog(item) > 0) //if item name is in log
-        {
-            objectives.Remove(GetObjective(item)); //remove the objective for this item
-        }
-        else //if item name is not in log
-        {
-            objectives.Add(GetObjective(item)); //add the objective for this item
-        }
-    }
-
     public void ElderComment(string item)
     {
-        //checkObjective(item);
-
         log.Add(item); 
         int c = CheckLog(item);
 
