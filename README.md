@@ -5,15 +5,13 @@
 Web-based puzzle game made in Unity.
 
 ## Play the game
-Available to play for free on itch.io
-Link: [kashngerm.itch.io/squirrel](https://kashngerm.itch.io/squirrel/)
+Available to play for free on itch.io [kashngerm.itch.io/squirrel](https://kashngerm.itch.io/squirrel/)
 
 ## Explore the code database
-- Assets > Scripts
+Assets -> Scripts
 - [Actions.cs] Combine 8 items into 100+ combos! 
 - [Recipe.cs] Combine those combos with other combos for even more combos!! 
 - [Dialogue.cs] Each combo reveals dialogue, developing the narrative 
 
 ## Explore the project 
-- Download
 - Open in Unity 2022
