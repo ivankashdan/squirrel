@@ -1,6 +1,6 @@
 # A squirrel must have buried it
 
-![speedrun_sushi_2](https://github.com/ivankashdan/squirrel/assets/68850022/f83dd89a-4fd1-46ad-98f5-5b4d15945b7c)
+![Squirrel](https://github.com/user-attachments/assets/835da631-7f61-4f4e-9302-43cbb7784a1b)
 
 Web-based puzzle game made in Unity.
 
